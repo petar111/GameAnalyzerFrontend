@@ -1,4 +1,7 @@
 export class Strategy{
-  private id: number;
-  private name: string;
+  public id: number;
+  public name: string;
+  constructor(name: string) {
+    this.name = name;
+  }
 }

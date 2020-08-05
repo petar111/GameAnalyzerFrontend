@@ -2,10 +2,15 @@ import {Strategy} from './Strategy';
 import {Player} from './Player';
 
 export class Game{
-  private id: number;
-  private name: string;
-  private externalInfo: string;
-  private description: string;
-  private strategies: Strategy[];
-  private players: Player[];
+  public id: number;
+  public name: string;
+  public externalInfo: string;
+  public description: string;
+  public strategies: Strategy[];
+  public players: Player[];
+
+  constructor() {
+    this.players = [];
+  }
+
 }

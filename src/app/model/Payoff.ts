@@ -1,8 +1,8 @@
 import {Strategy} from './Strategy';
 
 export class Payoff{
-  private id: number;
-  private amount: number;
-  private playedStrategy: Strategy;
-  private opposingStrategy: Strategy;
+  public id: number;
+  public amount: number;
+  public playedStrategy: Strategy;
+  public opposingStrategy: Strategy;
 }

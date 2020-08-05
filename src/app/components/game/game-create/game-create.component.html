@@ -1,0 +1,75 @@
+
+
+  <form #createGameForm = "ngForm" (ngSubmit)="onSubmit(createGameForm.value)">
+
+    <div class="container">
+      <div class="form-group">
+        <label for="gameName">Name</label>
+        <input type="text" ngModel  class="form-control" name="name" id="gameName"  placeholder="Enter name..." required>
+      </div>
+      <div class="form-group">
+        <label for="gameExternalInfo">External Info</label>
+        <input type="text" ngModel class="form-control" name="externalInfo" id="gameExternalInfo" placeholder="<Place external info here>">
+      </div>
+      <div class="form-group">
+        <label for="gameDescription">Description</label>
+        <input type="text" ngModel class="form-control" name="description" id="gameDescription" placeholder="Description">
+      </div>
+      <div class="form-group">
+        <label for="gameNumberOfStrategies">Number of Strategies</label>
+        <input id="gameNumberOfStrategies" ngModel #numberOfStrategies = "ngModel" type="text" class="form-control" name="numOfPlayers" (change)="onNumberOfStrategiesChange(numberOfStrategies.value)" [value]="numberOfStrategies.value">
+      </div>
+    </div>
+
+
+    <!--
+    <div class="form-check">
+      <input type="checkbox" class="form-check-input" id="gameZeroSum">
+      <label class="form-check-label" for="gameZeroSum">Zero sum</label>
+    </div>
+    -->
+    <table class="table">
+      <tbody>
+      <tr>
+        <th>#</th>
+        <td class="text-center" *ngFor="let strategy of this.game.strategies;index as i">
+          <input type="text" ngModel name="S2_{{i + 1}}" size="10" style="text-align: center" class="form-control-plaintext" value="{{strategy.name}}" placeholder="...">
+        </td>
+      </tr>
+      <tr *ngFor="let strategy of this.game.strategies; index as i">
+        <input type="text" ngModel name="S1_{{i + 1}}" size="10" style="text-align: center" class="form-control-plaintext" value="{{strategy.name}}" placeholder="...">
+
+          <td *ngFor="let strategy of this.game.strategies; index as j">
+            <div class="container">
+              <div class="row">
+                  (
+                <div class="col-5">
+                  <input type="text" ngModel name = "P1_{{i + 1}}{{j + 1}}" size="10"  class="form-control-plaintext"  value="0" placeholder="...">
+                </div>
+                  ,
+                <div class="col-5">
+                  <input type="text" ngModel name = "P2_{{i + 1}}{{j + 1}}" size="10" class="form-control-plaintext"  value="0" placeholder="...">
+                </div>
+                  )
+              </div>
+            </div>
+          </td>
+
+      </tr>
+      </tbody>
+    </table>
+
+    <hr>
+
+    <div class="container">
+      <div class="row">
+        <button type="submit" [disabled]="!this.isInputValid" class="btn btn-primary w-25 p-3">Submit</button>
+      </div>
+    </div>
+
+
+  </form>
+
+
+
+

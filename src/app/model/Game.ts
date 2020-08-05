@@ -10,7 +10,6 @@ export class Game{
   public players: Player[];
 
   constructor() {
-    this.players = [];
   }
 
 }

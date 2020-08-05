@@ -20,4 +20,7 @@ export class GameService {
     return this.http.post<any>(`${this.host}/game/insert`, gameJSON, {headers: {'Content-type': `application/json`}});
   }
 
+  getGameByName(name: string): Observable<Game> {
+    return  this.http.get<Game>(`${this.host}/game/get?name=${name}`);
+  }
 }

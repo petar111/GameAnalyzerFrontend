@@ -1,1 +1,60 @@
-<p>game-match works!</p>
+<div *ngIf="this.game !== undefined">
+
+  <div class="row">
+
+    <div class="col-4">
+      <h1 class="text-primary">Analytics : TODO</h1>
+    </div>
+
+    <div class="col-8">
+      <div class="container">
+        <div class="row">
+          <p>{{this.game.name}}</p>
+        </div>
+        <div class="row">
+          <a href="{{this.game.externalInfo}}">Get external info here</a>
+        </div>
+        <div class="row">
+          <p>{{this.game.description}}</p>
+        </div>
+      </div>
+
+      <div class="container">
+        <table class="table">
+          <tbody>
+          <tr>
+            <th>#</th>
+            <td class="text-center" *ngFor="let strategyColumnRead of this.playerC.playableStrategies;index as i">
+              <button type="button" class="btn btn-primary" value="">{{strategyColumnRead.name}}</button>
+            </td>
+          </tr>
+          <tr *ngFor="let strategyRow of this.playerH.playableStrategies; index as i">
+            <th>
+              <button type="button" class="btn btn-primary" value="">{{strategyRow.name}}</button>
+            </th>
+
+            <td *ngFor="let strategyColumn of this.playerC.playableStrategies; index as j">
+              <div class="container">
+                <div class="row">
+                  (
+                  <div class="col-5">
+                    {{getPlayerPayoffAmount(strategyRow, strategyColumn)}}
+                  </div>
+                  ,
+                  <div class="col-5">
+                    {{getOpposingPlayerPayoffAmount(strategyColumn, strategyRow)}}
+                  </div>
+                  )
+                </div>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+

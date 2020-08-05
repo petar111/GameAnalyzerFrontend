@@ -16,8 +16,12 @@
         <input type="text" ngModel class="form-control" name="description" id="gameDescription" placeholder="Description">
       </div>
       <div class="form-group">
-        <label for="gameNumberOfStrategies">Number of Strategies</label>
-        <input id="gameNumberOfStrategies" ngModel #numberOfStrategies = "ngModel" type="text" class="form-control" name="numOfPlayers" (change)="onNumberOfStrategiesChange(numberOfStrategies.value)" [value]="numberOfStrategies.value">
+        <label for="gameNumberOfStrategiesPlayerRow">Number of Strategies for row Player</label>
+        <input id="gameNumberOfStrategiesPlayerRow" ngModel #numberOfStrategiesPlayerRow = "ngModel" type="text" class="form-control" name="numberOfStrategiesPlayerRow" (change)="onNumberOfStrategiesPlayerRowChange(numberOfStrategiesPlayerRow.value)" [value]="numberOfStrategiesPlayerRow.value">
+      </div>
+      <div class="form-group">
+        <label for="gameNumberOfStrategiesPlayerColumn">Number of Strategies for column Player</label>
+        <input id="gameNumberOfStrategiesPlayerColumn" ngModel #numberOfStrategiesPlayerColumn = "ngModel" type="text" class="form-control" name="numberOfStrategiesPlayerColumn" (change)="onNumberOfStrategiesPlayerColumnChange(numberOfStrategiesPlayerColumn.value)" [value]="numberOfStrategiesPlayerColumn.value">
       </div>
     </div>
 
@@ -32,14 +36,14 @@
       <tbody>
       <tr>
         <th>#</th>
-        <td class="text-center" *ngFor="let strategy of this.game.strategies;index as i">
+        <td class="text-center" *ngFor="let strategy of this.playerColumn.playableStrategies;index as i">
           <input type="text" ngModel name="S2_{{i + 1}}" size="10" style="text-align: center" class="form-control-plaintext" value="{{strategy.name}}" placeholder="...">
         </td>
       </tr>
-      <tr *ngFor="let strategy of this.game.strategies; index as i">
+      <tr *ngFor="let strategy of this.playerRow.playableStrategies; index as i">
         <input type="text" ngModel name="S1_{{i + 1}}" size="10" style="text-align: center" class="form-control-plaintext" value="{{strategy.name}}" placeholder="...">
 
-          <td *ngFor="let strategy of this.game.strategies; index as j">
+          <td *ngFor="let strategy of this.playerColumn.playableStrategies; index as j">
             <div class="container">
               <div class="row">
                   (
@@ -63,7 +67,7 @@
 
     <div class="container">
       <div class="row">
-        <button type="submit" [disabled]="!this.isInputValid" class="btn btn-primary w-25 p-3">Submit</button>
+        <button type="submit" [disabled]="!createGameForm.valid" class="btn btn-primary w-25 p-3">Submit</button>
       </div>
     </div>
 

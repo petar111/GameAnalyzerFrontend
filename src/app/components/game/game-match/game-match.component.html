@@ -3,10 +3,10 @@
   <div class="row">
 
     <div class="col-4">
-      <h1 class="text-primary">Analytics : TODO</h1>
+      <h1 class="border border-primary text-primary">Analytics : TODO</h1>
     </div>
 
-    <div class="col-8">
+    <div class="border border-dark col-8">
       <div class="container">
         <div class="row">
           <p>{{this.game.name}}</p>
@@ -20,17 +20,20 @@
       </div>
 
       <div class="container">
+        <div class="row">
+
+
         <table class="table">
           <tbody>
           <tr>
             <th>#</th>
             <td class="text-center" *ngFor="let strategyColumnRead of this.playerC.playableStrategies;index as i">
-              <button type="button" class="btn btn-primary" value="">{{strategyColumnRead.name}}</button>
+              <button  type="button" class="btn btn-primary">{{strategyColumnRead.name}}</button>
             </td>
           </tr>
           <tr *ngFor="let strategyRow of this.playerH.playableStrategies; index as i">
             <th>
-              <button type="button" class="btn btn-primary" value="">{{strategyRow.name}}</button>
+              <button type="button" class="btn btn-primary" (click)="onStrategyButtonClick(strategyRow)">{{strategyRow.name}}</button>
             </th>
 
             <td *ngFor="let strategyColumn of this.playerC.playableStrategies; index as j">
@@ -51,10 +54,28 @@
           </tr>
           </tbody>
         </table>
-      </div>
-    </div>
-  </div>
 
+       </div>
+
+        <div class="row">
+          <p class="text-primary">Selected strategy: <span [@fadeInRight] = "fadeInRight ? 'one' : 'two'"  >{{selectedStrategy.name}}</span></p>
+        </div>
+
+        <div class="row">
+          <div class="col-1">
+            <button type="button" class="btn btn-primary">Move</button>
+          </div>
+          <div class="col-1">
+            <button type="button" class="btn btn-warning">Advice</button>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
 </div>
 
 

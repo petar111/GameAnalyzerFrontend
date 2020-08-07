@@ -13,6 +13,8 @@ import { GameCreateComponent } from './components/game/game-create/game-create.c
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { GameMatchComponent } from './components/game/game-match/game-match.component';
 import {NotifierModule} from 'angular-notifier';
+import { LoginComponent } from './components/login/login.component';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import {NotifierModule} from 'angular-notifier';
     MenuComponent,
     GameAllComponent,
     GameCreateComponent,
-    GameMatchComponent
+    GameMatchComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +34,8 @@ import {NotifierModule} from 'angular-notifier';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    NotifierModule
+    NotifierModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

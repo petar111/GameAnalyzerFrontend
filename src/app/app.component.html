@@ -1,6 +1,6 @@
 
-  <app-menu></app-menu>
+  <app-menu *ngIf="!isLoginComponent"></app-menu>
 
-  <router-outlet></router-outlet>
+  <router-outlet (activate)="onRouterOutletActivate($event)"></router-outlet>
 
   <notifier-container></notifier-container>

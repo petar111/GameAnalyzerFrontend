@@ -12,6 +12,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { GameCreateComponent } from './components/game/game-create/game-create.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { GameMatchComponent } from './components/game/game-match/game-match.component';
+import {NotifierModule} from 'angular-notifier';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { GameMatchComponent } from './components/game/game-match/game-match.comp
     CommonModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    NotifierModule
   ],
   providers: [],
   bootstrap: [AppComponent]

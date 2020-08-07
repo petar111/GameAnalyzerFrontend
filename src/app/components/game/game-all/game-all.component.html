@@ -11,7 +11,7 @@
       <tr *ngFor="let game of games; index as i">
           <th scope="row">{{i + 1}}</th>
           <td>{{game.name}}</td>
-          <td>{{game.externalInfo}}</td>
+          <td><a href="{{game.externalInfo}}">{{game.externalInfo}}</a></td>
           <td>{{game.description}}</td>
       </tr>
   </tbody>

@@ -1,21 +1,61 @@
-<div *ngIf="this.game !== undefined">
+<div *ngIf="this.gameSession.game !== undefined">
 
   <div class="row">
 
     <div class="col-4">
+      <div class="row">
+        <div class="col">
+          Total rounds: {{this.gameSession.numberOfRounds}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          {{this.gameSession.playerRow.player.name}}
+        </div>
+        <div class="col">
+          {{this.gameSession.playerColumn.player.name}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          Total payoff: {{this.gameSession.playerRow.totalPayoff}}
+        </div>
+        <div class="col">
+          Total payoff: {{this.gameSession.playerColumn.totalPayoff}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          Strategies played:
+          <div *ngFor="let strategy of this.gameSession.playerRow.player.playableStrategies" class="row">
+            <div class="col">
+              {{strategy.name}}: {{this.gameSession.playerRow.strategyPlayed[strategy.name]}}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          Strategies played:
+          <div *ngFor="let strategy of this.gameSession.playerColumn.player.playableStrategies" class="row">
+            <div class="col">
+              {{strategy.name}}: {{this.gameSession.playerColumn.strategyPlayed[strategy.name]}}
+            </div>
+          </div>
+        </div>
+
+      </div>
       <h1 class="border border-primary text-primary">Analytics : TODO</h1>
     </div>
 
     <div class="border border-dark col-8">
       <div class="container">
         <div class="row">
-          <p>{{this.game.name}}</p>
+          <p>{{this.gameSession.game.name}}</p>
         </div>
         <div class="row">
-          <a href="{{this.game.externalInfo}}">Get external info here</a>
+          <a href="{{this.gameSession.game.externalInfo}}">Get external info here</a>
         </div>
         <div class="row">
-          <p>{{this.game.description}}</p>
+          <p>{{this.gameSession.game.description}}</p>
         </div>
       </div>
 
@@ -27,25 +67,25 @@
           <tbody>
           <tr>
             <th>#</th>
-            <td class="text-center" *ngFor="let strategyColumnRead of this.playerC.playableStrategies;index as i">
+            <td class="text-center" *ngFor="let strategyColumnRead of this.gameSession.playerColumn.player.playableStrategies;index as i">
               <button  type="button" class="btn btn-primary">{{strategyColumnRead.name}}</button>
             </td>
           </tr>
-          <tr *ngFor="let strategyRow of this.playerH.playableStrategies; index as i">
+          <tr *ngFor="let strategyRow of this.gameSession.playerRow.player.playableStrategies; index as i">
             <th>
               <button type="button" class="btn btn-primary" (click)="onStrategyButtonClick(strategyRow)">{{strategyRow.name}}</button>
             </th>
 
-            <td *ngFor="let strategyColumn of this.playerC.playableStrategies; index as j">
+            <td *ngFor="let strategyColumn of this.gameSession.playerColumn.player.playableStrategies; index as j">
               <div class="container">
                 <div class="row">
                   (
                   <div class="col-5">
-                    {{getPlayerPayoffAmount(strategyRow, strategyColumn)}}
+                    {{this.getPlayerRowPayoffAmount(strategyRow, strategyColumn)}}
                   </div>
                   ,
                   <div class="col-5">
-                    {{getOpposingPlayerPayoffAmount(strategyColumn, strategyRow)}}
+                    {{this.getPlayerColumnPayoffAmount(strategyColumn, strategyRow)}}
                   </div>
                   )
                 </div>
@@ -58,12 +98,12 @@
        </div>
 
         <div class="row">
-          <p class="text-primary">Selected strategy: <span [@fadeInRight] = "fadeInRight ? 'one' : 'two'"  >{{selectedStrategy.name}}</span></p>
+          <p class="text-primary">Selected strategy: <span [@fadeInRight] = "fadeInRight ? 'one' : 'two'"  >{{this.gameSession.playerRow.selectedStrategy.name}}</span></p>
         </div>
 
         <div class="row">
           <div class="col-1">
-            <button type="button" class="btn btn-primary">Move</button>
+            <button type="button" (click)="this.onMove()" class="btn btn-primary">Move</button>
           </div>
           <div class="col-1">
             <button type="button" class="btn btn-warning">Advice</button>

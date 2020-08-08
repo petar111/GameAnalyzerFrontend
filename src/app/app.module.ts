@@ -8,13 +8,14 @@ import { MenuComponent } from './components/menu/menu.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { GameAllComponent } from './components/game/game-all/game-all.component';
 import {CommonModule} from '@angular/common';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { GameCreateComponent } from './components/game/game-create/game-create.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { GameMatchComponent } from './components/game/game-match/game-match.component';
 import {NotifierModule} from 'angular-notifier';
 import { LoginComponent } from './components/login/login.component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {CustomHttpInterceptor} from './interceptor/CustomHttpInterceptor';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,11 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
     NotifierModule,
     FontAwesomeModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: CustomHttpInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

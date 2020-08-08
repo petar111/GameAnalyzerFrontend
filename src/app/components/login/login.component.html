@@ -6,18 +6,17 @@
   <div class="container">
     <div class="row">
       <div class="col-md-offset-5 col-md-4 text-center">
+        <form #loginFormElement = "ngForm" (ngSubmit)="onLoginSubmit(loginFormElement.value)">
         <div class="form-login"><br>
           <h4>Secure Login</h4>
           <br>
-          <input type="text" id="userName" class="form-control input-sm chat-input" placeholder="username"/>
+          <input type="text"  ngModel name="username" id="userName" class="form-control input-sm chat-input" placeholder="username"/>
           <br><br>
-          <input type="password" id="userPassword" class="form-control input-sm chat-input" placeholder="password"/>
+          <input type="password" ngModel name="password" id="userPassword" class="form-control input-sm chat-input" placeholder="password"/>
           <br><br>
           <div class="row">
             <div class="wrapper col-5">
-                        <span class="group-btn">
-                            <a href="#" class="btn btn-primary btn-md">login <i><fa-icon [icon]="signInIcon"></fa-icon></i></a>
-                        </span>
+                    <button type="submit" class="btn btn-primary">login <i><fa-icon [icon]="signInIcon"></fa-icon></i></button>
             </div>
             <div class="wrapper col-7">
                         <span class="group-btn">
@@ -26,6 +25,7 @@
             </div>
           </div>
         </div>
+        </form>
       </div>
     </div>
     <br><br><br>

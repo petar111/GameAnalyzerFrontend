@@ -10,34 +10,34 @@
       </div>
       <div class="row">
         <div class="col">
-          {{this.gameSession.playerRow.player.name}}
+          {{this.playerRow.player.name}}
         </div>
         <div class="col">
-          {{this.gameSession.playerColumn.player.name}}
+          {{this.playerColumn.player.name}}
         </div>
       </div>
       <div class="row">
         <div class="col">
-          Total payoff: {{this.gameSession.playerRow.totalPayoff}}
+          Total payoff: {{this.playerRow.totalPayoff}}
         </div>
         <div class="col">
-          Total payoff: {{this.gameSession.playerColumn.totalPayoff}}
+          Total payoff: {{this.playerColumn.totalPayoff}}
         </div>
       </div>
       <div class="row">
         <div class="col">
           Strategies played:
-          <div *ngFor="let strategy of this.gameSession.playerRow.player.playableStrategies" class="row">
+          <div *ngFor="let strategy of this.playerRow.player.playableStrategies" class="row">
             <div class="col">
-              {{strategy.name}}: {{this.gameSession.playerRow.strategyPlayed[strategy.name]}}
+              {{strategy.name}}: {{this.playerRow.strategyPlayed[strategy.name]}}
             </div>
           </div>
         </div>
         <div class="col">
           Strategies played:
-          <div *ngFor="let strategy of this.gameSession.playerColumn.player.playableStrategies" class="row">
+          <div *ngFor="let strategy of this.playerColumn.player.playableStrategies" class="row">
             <div class="col">
-              {{strategy.name}}: {{this.gameSession.playerColumn.strategyPlayed[strategy.name]}}
+              {{strategy.name}}: {{this.playerColumn.strategyPlayed[strategy.name]}}
             </div>
           </div>
         </div>
@@ -67,16 +67,16 @@
           <tbody>
           <tr>
             <th>#</th>
-            <td class="text-center" *ngFor="let strategyColumnRead of this.gameSession.playerColumn.player.playableStrategies;index as i">
+            <td class="text-center" *ngFor="let strategyColumnRead of this.playerColumn.player.playableStrategies;index as i">
               <button  type="button" class="btn btn-primary">{{strategyColumnRead.name}}</button>
             </td>
           </tr>
-          <tr *ngFor="let strategyRow of this.gameSession.playerRow.player.playableStrategies; index as i">
+          <tr *ngFor="let strategyRow of this.playerRow.player.playableStrategies; index as i">
             <th>
               <button type="button" class="btn btn-primary" (click)="onStrategyButtonClick(strategyRow)">{{strategyRow.name}}</button>
             </th>
 
-            <td *ngFor="let strategyColumn of this.gameSession.playerColumn.player.playableStrategies; index as j">
+            <td *ngFor="let strategyColumn of this.playerColumn.player.playableStrategies; index as j">
               <div class="container">
                 <div class="row">
                   (
@@ -98,7 +98,7 @@
        </div>
 
         <div class="row">
-          <p class="text-primary">Selected strategy: <span [@fadeInRight] = "fadeInRight ? 'one' : 'two'"  >{{this.gameSession.playerRow.selectedStrategy.name}}</span></p>
+          <p class="text-primary">Selected strategy: <span [@fadeInRight] = "fadeInRight ? 'one' : 'two'"  >{{this.playerRow.selectedStrategy.name}}</span></p>
         </div>
 
         <div class="row">

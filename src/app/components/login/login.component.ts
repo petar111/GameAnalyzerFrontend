@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
-import {faSignInAlt} from '@fortawesome/free-solid-svg-icons';
 import {faCheckDouble} from '@fortawesome/free-solid-svg-icons/faCheckDouble';
 import {faKey} from '@fortawesome/free-solid-svg-icons/faKey';
 import {AuthenticationService} from '../../service/authentication.service';
 import {LoginRequest} from '../../model/LoginRequest';
 import {NotifierService} from 'angular-notifier';
 import {Router} from '@angular/router';
-import {User} from '../../model/User';
 
 @Component({
   selector: 'app-login',
@@ -36,7 +34,13 @@ export class LoginComponent implements OnInit {
         this.router.navigateByUrl('');
       }),
       (error => {
-        this.notifierService.notify('error', 'The username or password are not correct.');
+        if (error.error instanceof ErrorEvent) {
+          // A client-side or network error occurred. Handle it accordingly.
+          this.notifierService.notify('error', error.error.message);
+        }else{
+          // A server-side error
+          this.notifierService.notify('error', error.statusText + ' ' + error.body);
+        }
       })
     );
   }

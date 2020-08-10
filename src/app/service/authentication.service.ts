@@ -4,12 +4,15 @@ import {LoginRequest} from '../model/LoginRequest';
 import {User} from '../model/User';
 import {HttpClient, HttpErrorResponse, HttpResponse} from '@angular/common/http';
 import {environment} from '../../environments/environment';
+import {JwtHelperService} from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
+  public token: string;
+  private jwtHelper = new JwtHelperService();
   constructor(private httpClient: HttpClient) { }
 
   login(loginRequest: LoginRequest): Observable<HttpResponse<User>> {
@@ -29,5 +32,22 @@ export class AuthenticationService {
 
   getToken(): string {
     return localStorage.getItem('token');
+  }
+  loadToken(): void{
+    this.token = localStorage.getItem('token');
+  }
+
+  isUserAuthenticated(): boolean {
+    this.loadToken();
+    if (this.token === null || this.token === ''){
+      return false;
+    }
+    if (this.jwtHelper.decodeToken(this.token).sub === null || this.jwtHelper.decodeToken(this.token).sub === ''){
+      return false;
+    }
+    if (this.jwtHelper.isTokenExpired(this.token)){
+      return false;
+    }
+    return true;
   }
 }

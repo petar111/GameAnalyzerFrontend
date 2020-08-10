@@ -3,6 +3,5 @@ export class GameInfo{
   public name: string;
   public externalInfo: string;
   public description: string;
-
-
+  public creatorUsername: string;
 }

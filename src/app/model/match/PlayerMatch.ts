@@ -5,7 +5,7 @@ export class PlayerMatch{
   public player: Player;
   public totalPayoff: number;
   public selectedStrategy: Strategy;
-  public strategyPlayed = [];
+  public strategyPlayed = {};
   constructor(player: Player) {
     this.player = player;
     this.totalPayoff = 0;

@@ -38,6 +38,7 @@ export class GameCreateComponent implements OnInit {
   }
 
   onSubmit(value: any): void {
+    this.game.creator = JSON.parse(localStorage.getItem('user'));
     this.game.name = value[`name`];
     this.game.externalInfo = value[`externalInfo`];
     this.game.description = value[`description`];

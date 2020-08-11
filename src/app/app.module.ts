@@ -16,6 +16,10 @@ import {NotifierModule} from 'angular-notifier';
 import { LoginComponent } from './components/login/login.component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {CustomHttpInterceptor} from './interceptor/CustomHttpInterceptor';
+import { GameSessionComponent } from './components/user/game-session/game-session.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import { SaveSessionDialogComponent } from './components/dialog/save-session-dialog/save-session-dialog.component';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -25,7 +29,9 @@ import {CustomHttpInterceptor} from './interceptor/CustomHttpInterceptor';
     GameAllComponent,
     GameCreateComponent,
     GameMatchComponent,
-    LoginComponent
+    LoginComponent,
+    GameSessionComponent,
+    SaveSessionDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +42,9 @@ import {CustomHttpInterceptor} from './interceptor/CustomHttpInterceptor';
     ReactiveFormsModule,
     FormsModule,
     NotifierModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    MatDialogModule,
+    MatButtonModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

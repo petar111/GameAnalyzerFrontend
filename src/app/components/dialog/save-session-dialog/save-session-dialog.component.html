@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>Game analyzer</h2>
+<mat-dialog-content class="mat-typography">
+  <h3>You are about to save the game session.</h3>
+  <p *ngIf="this.isNewGameSession">The session you are saving already exists Do you want to overwrite it or save as new?.</p>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="saveAsNewOption" cdkFocusInitial>Save <span *ngIf="this.isNewGameSession">as new</span></button>
+  <button *ngIf="this.isNewGameSession" mat-button [mat-dialog-close]="overwriteExistingOption" >Overwrite existing</button>
+</mat-dialog-actions>

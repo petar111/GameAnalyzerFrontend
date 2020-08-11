@@ -7,6 +7,11 @@ import {fadeInRight} from 'ng-animate';
 import {GameSession} from '../../../model/match/GameSession';
 import {PlayerMatch} from '../../../model/match/PlayerMatch';
 import {NotifierService} from 'angular-notifier';
+import {PlayedStrategy} from '../../../model/match/PlayedStrategy';
+import {MatDialog} from '@angular/material/dialog';
+import {SaveSessionDialogComponent} from '../../dialog/save-session-dialog/save-session-dialog.component';
+import {logger} from 'codelyzer/util/logger';
+import {SaveSessionOptions} from '../../../enum/save-session-options.enum';
 
 @Component({
   selector: 'app-game-match',
@@ -28,7 +33,10 @@ export class GameMatchComponent implements OnInit, OnDestroy {
   public playerColumnName = 'playerColumn';
   public playerColumn: PlayerMatch;
   public playerRow: PlayerMatch;
-  constructor(private gameService: GameService, private router: Router, private notifierService: NotifierService) { }
+  constructor(private gameService: GameService,
+              private router: Router,
+              private notifierService: NotifierService,
+              private saveSessionDialog: MatDialog) { }
 
   ngOnInit(): void {
     if (localStorage.getItem('gameSession') !== null && localStorage.getItem('gameSession') !== undefined){
@@ -40,8 +48,10 @@ export class GameMatchComponent implements OnInit, OnDestroy {
     this.gameService.getGameByName('CustomGame1').subscribe(
       data => {
         this.gameSession.game = data;
-        this.gameSession.players[this.playerRowName] = new PlayerMatch(this.gameSession.game.players.find(p => p.name === 'Player1'));
-        this.gameSession.players[this.playerColumnName] = new PlayerMatch(this.gameSession.game.players.find(p => p.name === 'Player2'));
+        this.gameSession.players
+          .push(new PlayerMatch(this.gameSession.game.players.find(p => p.name === 'Player1'), this.playerRowName));
+        this.gameSession.players
+          .push(new PlayerMatch(this.gameSession.game.players.find(p => p.name === 'Player2'), this.playerColumnName));
         this.initPlayers();
         console.log(JSON.stringify(this.gameSession));
         console.log(JSON.stringify(this.playerRow));
@@ -76,10 +86,13 @@ export class GameMatchComponent implements OnInit, OnDestroy {
       this.getPlayerRowPayoffAmount(this.playerRow.selectedStrategy, this.playerColumn.selectedStrategy);
     this.playerColumn.totalPayoff +=
       this.getPlayerColumnPayoffAmount(this.playerColumn.selectedStrategy, this.playerRow.selectedStrategy);
-    this.playerRow.strategyPlayed[this.playerRow.selectedStrategy.name]++;
-    this.playerColumn.strategyPlayed[this.playerColumn.selectedStrategy.name]++;
+    this.findPlayedStrategyByStrategyAndPlayerMatch(this.playerRow.selectedStrategy, this.playerRow).timesPlayed++;
+    this.findPlayedStrategyByStrategyAndPlayerMatch(this.playerColumn.selectedStrategy, this.playerColumn).timesPlayed++;
     this.gameSession.numberOfRounds++;
     this.notifierService.notify('info', `You played ${this.playerRow.selectedStrategy.name} and your opponent played ${this.playerColumn.selectedStrategy.name}`);
+  }
+  findPlayedStrategyByStrategyAndPlayerMatch(strategy: Strategy, playerMatch: PlayerMatch): PlayedStrategy{
+    return playerMatch.playedStrategies.find(value => value.strategy.id === strategy.id);
   }
 
   ngOnDestroy(): void {
@@ -87,7 +100,44 @@ export class GameMatchComponent implements OnInit, OnDestroy {
   }
 
   private initPlayers(): void {
-    this.playerColumn = this.gameSession.players[this.playerColumnName];
-    this.playerRow = this.gameSession.players[this.playerRowName];
+    this.playerColumn = this.gameSession.players[1];
+    this.playerRow = this.gameSession.players[0];
+  }
+
+  onSaveSession(): void {
+    const dialog = this.saveSessionDialog.open(SaveSessionDialogComponent, {
+      data: {
+        id: this.gameSession.id
+      }
+    } );
+    dialog.afterClosed().subscribe(data => {
+      if (data === SaveSessionOptions.SAVE_AS_NEW){
+        this.gameSession.id = null;
+        this.gameSession.players.forEach(value => value.id = null);
+        this.gameSession.players.forEach(value => value.playedStrategies.forEach(value1 => value1.id = null));
+      }
+      this.gameSession.creator = JSON.parse(localStorage.getItem('user'));
+      this.gameService.saveGameSession(this.gameSession).subscribe(
+        response => {
+          this.updateGameSessionIds(response);
+          this.notifierService.notify('success', 'Game session is successfully saved.');
+          console.log(response);
+        },
+        error => {
+          this.notifierService.notify('error', 'Game session saving is failed.');
+        }
+      );
+    });
+  }
+
+
+  private updateGameSessionIds(gameSessionResponse: GameSession): void {
+    this.gameSession.id = gameSessionResponse.id;
+    this.gameSession.players.forEach(player => player.id = gameSessionResponse.players
+      .find(playerInResponse => playerInResponse.player.id === player.player.id).id);
+    this.gameSession.players.forEach(player => player.playedStrategies
+      .forEach(playedStrategy => playedStrategy.id = gameSessionResponse.players
+        .find(playerInResponse => playerInResponse.player.id === player.player.id).playedStrategies
+        .find(playedStrategyInResponse => playedStrategyInResponse.strategy.id === playedStrategy.strategy.id).id));
   }
 }

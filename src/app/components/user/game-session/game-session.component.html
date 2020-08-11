@@ -1,0 +1,21 @@
+<table class="table table-striped">
+  <thead class="thead-dark">
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">Game name</th>
+    <th scope="col">Number of rounds</th>
+    <th scope="col"></th>
+    <th scope="col"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let gameSessionInfo of gameSessionsInfo; index as i">
+    <th scope="row">{{i + 1}}</th>
+    <td>{{gameSessionInfo.game.name}}</td>
+    <td>{{gameSessionInfo.numberOfRounds}}</td>
+    <td>Details</td>
+    <td>Load</td>
+  </tr>
+  </tbody>
+
+</table>

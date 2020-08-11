@@ -4,6 +4,8 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {GameInfo} from '../model/GameInfo';
 import {Game} from '../model/Game';
+import {GameSession} from '../model/match/GameSession';
+import {GameSessionInfo} from '../model/match/GameSessionInfo';
 
 @Injectable({
   providedIn: 'root'
@@ -22,5 +24,16 @@ export class GameService {
 
   getGameByName(name: string): Observable<Game> {
     return  this.http.get<Game>(`${this.host}/game/get?name=${name}`);
+  }
+
+  saveGameSession(gameSession: GameSession): Observable<GameSession> {
+    const gameSessionJson = JSON.stringify(gameSession);
+    return this.http.post<GameSession>(`${this.host}/game/game-session/save`, gameSessionJson,
+      {headers: {'Content-type': `application/json`}});
+  }
+
+  getAllGameSessionsForUser(): Observable<GameSessionInfo[]> {
+      const username = JSON.parse(localStorage.getItem('user')).username;
+      return this.http.get<GameSessionInfo[]>(`${this.host}/game/game-session/get-by-creator?username=${username}`);
   }
 }

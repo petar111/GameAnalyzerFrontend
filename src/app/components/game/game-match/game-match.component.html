@@ -29,7 +29,7 @@
           Strategies played:
           <div *ngFor="let strategy of this.playerRow.player.playableStrategies" class="row">
             <div class="col">
-              {{strategy.name}}: {{this.playerRow.strategyPlayed[strategy.name]}}
+              {{strategy.name}}: {{findPlayedStrategyByStrategyAndPlayerMatch(strategy, this.playerRow).timesPlayed}}
             </div>
           </div>
         </div>
@@ -37,7 +37,7 @@
           Strategies played:
           <div *ngFor="let strategy of this.playerColumn.player.playableStrategies" class="row">
             <div class="col">
-              {{strategy.name}}: {{this.playerColumn.strategyPlayed[strategy.name]}}
+              {{strategy.name}}: {{findPlayedStrategyByStrategyAndPlayerMatch(strategy, this.playerColumn).timesPlayed}}
             </div>
           </div>
         </div>
@@ -109,6 +109,14 @@
             <button type="button" class="btn btn-warning">Advice</button>
           </div>
 
+        </div>
+
+
+      </div>
+
+      <div class="container">
+        <div class="row">
+          <button (click)="onSaveSession()">Save session</button>
         </div>
       </div>
 

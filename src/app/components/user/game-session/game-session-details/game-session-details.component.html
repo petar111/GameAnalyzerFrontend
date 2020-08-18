@@ -1,0 +1,111 @@
+<h2 mat-dialog-title>Game analyzer</h2>
+<mat-dialog-content class="mat-typography">
+
+  <div class="row">
+
+    <div class="col-4">
+      <div class="row">
+        <div class="col">
+          Total rounds: {{this.data.gameSessionData.numberOfRounds}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          {{this.playerRow.player.name}}
+        </div>
+        <div class="col">
+          {{this.playerColumn.player.name}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          Total payoff: {{this.playerRow.totalPayoff}}
+        </div>
+        <div class="col">
+          Total payoff: {{this.playerColumn.totalPayoff}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          Strategies played:
+          <div *ngFor="let strategy of this.playerRow.player.playableStrategies" class="row">
+            <div class="col">
+              {{strategy.name}}: {{findPlayedStrategyByStrategyAndPlayerMatch(strategy, this.playerRow).timesPlayed}}
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          Strategies played:
+          <div *ngFor="let strategy of this.playerColumn.player.playableStrategies" class="row">
+            <div class="col">
+              {{strategy.name}}: {{findPlayedStrategyByStrategyAndPlayerMatch(strategy, this.playerColumn).timesPlayed}}
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="border border-dark col-8">
+      <div class="container">
+        <div class="row">
+          <p>{{this.data.gameSessionData.game.name}}</p>
+        </div>
+        <div class="row">
+          <a href="{{this.data.gameSessionData.game.externalInfo}}">Get external info here</a>
+        </div>
+        <div class="row">
+          <p>{{this.data.gameSessionData.game.description}}</p>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row">
+
+
+          <table class="table">
+            <tbody>
+            <tr>
+              <th>#</th>
+              <td class="text-center" *ngFor="let strategyColumnRead of this.playerColumn.player.playableStrategies;index as i">
+                {{strategyColumnRead.name}}
+              </td>
+            </tr>
+            <tr *ngFor="let strategyRow of this.playerRow.player.playableStrategies; index as i">
+              <th>
+                {{strategyRow.name}}
+              </th>
+
+              <td *ngFor="let strategyColumn of this.playerColumn.player.playableStrategies; index as j">
+                <div class="container">
+                  <div class="row">
+                    (
+                    <div class="col-5">
+                      {{this.getPlayerRowPayoffAmount(strategyRow, strategyColumn)}}
+                    </div>
+                    ,
+                    <div class="col-5">
+                      {{this.getPlayerColumnPayoffAmount(strategyColumn, strategyRow)}}
+                    </div>
+                    )
+                  </div>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+  </div>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Close</button>
+  <button mat-button mat-dialog-close [mat-dialog-close]="loadGameSession">Load</button>
+</mat-dialog-actions>

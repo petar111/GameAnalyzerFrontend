@@ -1,4 +1,5 @@
 export enum SaveSessionOptions {
   SAVE_AS_NEW,
-  OVERWRITE_EXISTING
+  OVERWRITE_EXISTING,
+  CANCEL
 }

@@ -20,6 +20,7 @@ import { GameSessionComponent } from './components/user/game-session/game-sessio
 import {MatDialogModule} from '@angular/material/dialog';
 import { SaveSessionDialogComponent } from './components/dialog/save-session-dialog/save-session-dialog.component';
 import {MatButtonModule} from '@angular/material/button';
+import { GameSessionDetailsComponent } from './components/user/game-session/game-session-details/game-session-details.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import {MatButtonModule} from '@angular/material/button';
     GameMatchComponent,
     LoginComponent,
     GameSessionComponent,
-    SaveSessionDialogComponent
+    SaveSessionDialogComponent,
+    GameSessionDetailsComponent
   ],
   imports: [
     BrowserModule,

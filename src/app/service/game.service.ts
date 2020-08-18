@@ -36,4 +36,8 @@ export class GameService {
       const username = JSON.parse(localStorage.getItem('user')).username;
       return this.http.get<GameSessionInfo[]>(`${this.host}/game/game-session/get-by-creator?username=${username}`);
   }
+
+  getGameSessionById(gameSessionId: number): Observable<GameSession> {
+    return this.http.get<GameSession>(`${this.host}/game/game-session/${gameSessionId}`);
+  }
 }

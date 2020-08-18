@@ -5,7 +5,7 @@
 
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="cancel">Cancel</button>
   <button mat-button [mat-dialog-close]="saveAsNewOption" cdkFocusInitial>Save <span *ngIf="this.isNewGameSession">as new</span></button>
   <button *ngIf="this.isNewGameSession" mat-button [mat-dialog-close]="overwriteExistingOption" >Overwrite existing</button>
 </mat-dialog-actions>

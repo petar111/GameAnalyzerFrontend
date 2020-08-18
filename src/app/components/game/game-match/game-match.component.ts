@@ -111,6 +111,9 @@ export class GameMatchComponent implements OnInit, OnDestroy {
       }
     } );
     dialog.afterClosed().subscribe(data => {
+      if (data === undefined || data === null || data === SaveSessionOptions.CANCEL){
+        return;
+      }
       if (data === SaveSessionOptions.SAVE_AS_NEW){
         this.gameSession.id = null;
         this.gameSession.players.forEach(value => value.id = null);

@@ -11,6 +11,7 @@ export class SaveSessionDialogComponent implements OnInit {
   public saveAsNewOption = SaveSessionOptions.SAVE_AS_NEW;
   public overwriteExistingOption = SaveSessionOptions.OVERWRITE_EXISTING;
   public isNewGameSession: boolean;
+  public cancel = SaveSessionOptions.CANCEL;
   constructor(@Inject(MAT_DIALOG_DATA) public gameSessionData: any) {
     this.isNewGameSession = gameSessionData.id !== undefined && gameSessionData.id != null;
   }

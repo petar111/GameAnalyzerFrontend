@@ -7,10 +7,12 @@ import {GameMatchComponent} from './components/game/game-match/game-match.compon
 import {LoginComponent} from './components/login/login.component';
 import {AuthenticationGuard} from './guard/AuthenticationGuard';
 import {GameSessionComponent} from './components/user/game-session/game-session.component';
+import {ProfileComponent} from './components/user/profile/profile.component';
 
 const routes: Routes = [
   {path : 'login', component: LoginComponent},
   {path : 'user/my-sessions', canActivate: [AuthenticationGuard], component: GameSessionComponent},
+  {path : 'user/profile', canActivate: [AuthenticationGuard], component: ProfileComponent},
   {path : 'game/match', canActivate: [AuthenticationGuard], component: GameMatchComponent},
   {path : 'game/create', canActivate: [AuthenticationGuard],   component: GameCreateComponent},
   {path : 'game/all', canActivate: [AuthenticationGuard],  component: GameAllComponent},

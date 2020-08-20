@@ -6,6 +6,8 @@ import {GameInfo} from '../model/GameInfo';
 import {Game} from '../model/Game';
 import {GameSession} from '../model/match/GameSession';
 import {GameSessionInfo} from '../model/match/GameSessionInfo';
+import {Payoff} from '../model/Payoff';
+import {GameAdviceData} from '../model/GameAdviceData';
 
 @Injectable({
   providedIn: 'root'
@@ -39,5 +41,9 @@ export class GameService {
 
   getGameSessionById(gameSessionId: number): Observable<GameSession> {
     return this.http.get<GameSession>(`${this.host}/game/game-session/${gameSessionId}`);
+  }
+
+  getGameAdvice(game: Game): Observable<GameAdviceData> {
+    return this.http.get<GameAdviceData>(`${this.host}/game/${game.id}/advice`);
   }
 }

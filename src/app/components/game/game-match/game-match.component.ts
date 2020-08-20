@@ -143,4 +143,12 @@ export class GameMatchComponent implements OnInit, OnDestroy {
         .find(playerInResponse => playerInResponse.player.id === player.player.id).playedStrategies
         .find(playedStrategyInResponse => playedStrategyInResponse.strategy.id === playedStrategy.strategy.id).id));
   }
+
+  onAdvice(): void {
+    this.gameService.getGameAdvice(this.gameSession.game).subscribe(
+      data => {
+        alert(JSON.stringify(data));
+      }
+    );
+  }
 }

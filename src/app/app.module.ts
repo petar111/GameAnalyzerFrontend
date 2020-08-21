@@ -23,6 +23,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { GameSessionDetailsComponent } from './components/user/game-session/game-session-details/game-session-details.component';
 import { ProfileComponent } from './components/user/profile/profile.component';
 import { SubmitScoreComponent } from './components/dialog/submit-score/submit-score.component';
+import { RegisterComponent } from './components/user/register/register.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { SubmitScoreComponent } from './components/dialog/submit-score/submit-sc
     SaveSessionDialogComponent,
     GameSessionDetailsComponent,
     ProfileComponent,
-    SubmitScoreComponent
+    SubmitScoreComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

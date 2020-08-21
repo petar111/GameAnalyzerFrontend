@@ -1,0 +1,78 @@
+<div class="container">
+  <br>  <p class="text-center"> <b>More bootstrap 4 components on</b> <a href="http://bootstrap-ecommerce.com/">  Bootstrap-ecommerce.com  </a>  <i class="text-primary"><fa-icon [icon]="faBootstrap"></fa-icon></i></p>
+  <hr>
+
+  <div class="card bg-light go-bottom">
+    <article class="card-body mx-auto" style="max-width: 400px;">
+      <h4 class="card-title mt-3 text-center">Create Account</h4>
+      <p class="text-center">Get started with your free account</p>
+      <form #createGameForm = "ngForm" (ngSubmit)="onSubmit(createGameForm.value)" >
+        <div class="form-group input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"> <i><fa-icon [icon]="faUser"></fa-icon></i> </span>
+          </div>
+          <input ngModel required name="firstName" class="form-control" placeholder="First name" type="text">
+        </div> <!-- form-group// -->
+        <div class="form-group input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"> <i><fa-icon [icon]="faUser"></fa-icon></i> </span>
+          </div>
+          <input ngModel required name="lastName"  class="form-control" placeholder="Last name" type="text">
+        </div> <!-- form-group// -->
+        <div class="form-group input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"> <i><fa-icon [icon]="faEnvelope"></fa-icon></i> </span>
+          </div>
+          <input ngModel required name="email" class="form-control" placeholder="Email address" type="email">
+        </div> <!-- form-group// -->
+        <div class="form-group input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"> <i><fa-icon [icon]="faUser"></fa-icon></i> </span>
+          </div>
+          <input ngModel required name="username" class="form-control" placeholder="Username" type="text">
+        </div> <!-- form-group// -->
+        <div class="form-group input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"> <i><fa-icon [icon]="faGlobe"></fa-icon></i> </span>
+          </div>
+          <input ngModel name="country" class="form-control" placeholder="Country" type="text">
+        </div> <!-- form-group// -->
+        <div class="form-group input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"> <b>Date of birth</b> </span>
+          </div>
+          <input ngModel name="dateOfBirth" id="date_of_birth" class="form-control" value="Date of birth" type="date">
+        </div> <!-- form-group// -->
+        <div class="form-group input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"> <i><fa-icon [icon]="faPassword"></fa-icon></i> </span>
+          </div>
+          <input ngModel required name="password" class="form-control" placeholder="Create password" type="password">
+        </div> <!-- form-group// -->
+        <div class="form-group input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text"> <i><fa-icon [icon]="faPassword"></fa-icon></i> </span>
+          </div>
+          <input class="form-control" placeholder="Repeat password" type="password">
+        </div> <!-- form-group// -->
+        <div class="form-group">
+          <button type="submit" [disabled]="createGameForm.invalid" class="btn btn-primary btn-block"> Create Account  </button>
+        </div> <!-- form-group// -->
+        <p class="text-center">Have an account? <a routerLink="/login">Log In</a> </p>
+      </form>
+    </article>
+  </div> <!-- card.// -->
+
+</div>
+<!--container end.//-->
+
+<br><br>
+<article class="bg-secondary mb-3">
+  <div class="card-body text-center">
+    <h3 class="text-white mt-3">Game analyzer team</h3>
+    <p class="h5 text-white">For more fun and analyzing  <br> Visit Lichess - a free, full featured site for chess playing and analyzing with one of the wolds top opensource chess engine.</p>   <br>
+    <p><a class="btn btn-success" target="_blank" href="https://lichess.org/"> lichess.com
+      <i><fa-icon [icon]="faChess"></fa-icon></i></a></p>
+  </div>
+  <br><br>
+</article>

@@ -8,8 +8,10 @@ import {LoginComponent} from './components/login/login.component';
 import {AuthenticationGuard} from './guard/AuthenticationGuard';
 import {GameSessionComponent} from './components/user/game-session/game-session.component';
 import {ProfileComponent} from './components/user/profile/profile.component';
+import {RegisterComponent} from './components/user/register/register.component';
 
 const routes: Routes = [
+  {path : 'register', component: RegisterComponent},
   {path : 'login', component: LoginComponent},
   {path : 'user/my-sessions', canActivate: [AuthenticationGuard], component: GameSessionComponent},
   {path : 'user/profile', canActivate: [AuthenticationGuard], component: ProfileComponent},

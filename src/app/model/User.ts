@@ -10,4 +10,5 @@ export class User{
   public isAccountNonLocked: boolean;
   public isCredentialsNonExpired: boolean;
   public isEnabled: boolean;
+  public experience: number;
 }

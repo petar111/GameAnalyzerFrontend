@@ -12,6 +12,10 @@ import {MatDialog} from '@angular/material/dialog';
 import {SaveSessionDialogComponent} from '../../dialog/save-session-dialog/save-session-dialog.component';
 import {logger} from 'codelyzer/util/logger';
 import {SaveSessionOptions} from '../../../enum/save-session-options.enum';
+import {SubmitScoreComponent} from '../../dialog/submit-score/submit-score.component';
+import {SubmitScoreOption} from '../../../enum/submit-score-option.enum';
+import {GameScore} from '../../../model/score/GameScore';
+import {UserService} from '../../../service/user.service';
 
 @Component({
   selector: 'app-game-match',
@@ -36,6 +40,7 @@ export class GameMatchComponent implements OnInit, OnDestroy {
   constructor(private gameService: GameService,
               private router: Router,
               private notifierService: NotifierService,
+              private userService: UserService,
               private saveSessionDialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -89,7 +94,47 @@ export class GameMatchComponent implements OnInit, OnDestroy {
     this.findPlayedStrategyByStrategyAndPlayerMatch(this.playerRow.selectedStrategy, this.playerRow).timesPlayed++;
     this.findPlayedStrategyByStrategyAndPlayerMatch(this.playerColumn.selectedStrategy, this.playerColumn).timesPlayed++;
     this.gameSession.numberOfRounds++;
+    this.onNumberOfRoundsChanged();
     this.notifierService.notify('info', `You played ${this.playerRow.selectedStrategy.name} and your opponent played ${this.playerColumn.selectedStrategy.name}`);
+  }
+  onNumberOfRoundsChanged(): void{
+    switch (this.gameSession.numberOfRounds){
+      case 10:
+      case 20:
+      case 50:
+      case 100:
+        const dialog = this.saveSessionDialog.open(SubmitScoreComponent, {
+          data: {
+            numberOfRounds: this.gameSession.numberOfRounds
+          }
+        } );
+        dialog.afterClosed().subscribe(
+          data => {
+            if (data === undefined || data === null || data === SubmitScoreOption.CANCEL){
+              return;
+            }
+
+            const gameScore: GameScore = new GameScore();
+            gameScore.game = this.gameSession.game;
+            gameScore.numberOfRounds = this.gameSession.numberOfRounds;
+            gameScore.totalPayoff = this.playerRow.totalPayoff;
+            gameScore.player = this.playerRow.player;
+            gameScore.user = JSON.parse(localStorage.getItem('user'));
+            this.gameService.submitScore(gameScore).subscribe(
+              response => {
+                this.userService.updateUserExperience(response.experience).subscribe(
+                  response2 => {
+                    this.userService.saveUserToLocalStorage(response2.user);
+                    this.notifierService.notify('success', response2.message);
+                  }
+                );
+                this.notifierService.notify('info', response.message);
+              }
+            );
+          }
+        );
+        break;
+    }
   }
   findPlayedStrategyByStrategyAndPlayerMatch(strategy: Strategy, playerMatch: PlayerMatch): PlayedStrategy{
     return playerMatch.playedStrategies.find(value => value.strategy.id === strategy.id);

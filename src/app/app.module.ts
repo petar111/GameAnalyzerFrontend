@@ -22,6 +22,7 @@ import { SaveSessionDialogComponent } from './components/dialog/save-session-dia
 import {MatButtonModule} from '@angular/material/button';
 import { GameSessionDetailsComponent } from './components/user/game-session/game-session-details/game-session-details.component';
 import { ProfileComponent } from './components/user/profile/profile.component';
+import { SubmitScoreComponent } from './components/dialog/submit-score/submit-score.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { ProfileComponent } from './components/user/profile/profile.component';
     GameSessionComponent,
     SaveSessionDialogComponent,
     GameSessionDetailsComponent,
-    ProfileComponent
+    ProfileComponent,
+    SubmitScoreComponent
   ],
   imports: [
     BrowserModule,

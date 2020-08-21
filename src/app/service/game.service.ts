@@ -8,6 +8,7 @@ import {GameSession} from '../model/match/GameSession';
 import {GameSessionInfo} from '../model/match/GameSessionInfo';
 import {Payoff} from '../model/Payoff';
 import {GameAdviceData} from '../model/GameAdviceData';
+import {GameScore} from '../model/score/GameScore';
 
 @Injectable({
   providedIn: 'root'
@@ -45,5 +46,9 @@ export class GameService {
 
   getGameAdvice(game: Game): Observable<GameAdviceData> {
     return this.http.get<GameAdviceData>(`${this.host}/game/${game.id}/advice`);
+  }
+
+  submitScore(gameScore: GameScore): Observable<any> {
+    return this.http.post<any>(`${this.host}/game/score/submit`, gameScore, {headers: {'Content-type': `application/json`}});
   }
 }

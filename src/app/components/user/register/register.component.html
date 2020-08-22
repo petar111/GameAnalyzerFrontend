@@ -6,7 +6,7 @@
     <article class="card-body mx-auto" style="max-width: 400px;">
       <h4 class="card-title mt-3 text-center">Create Account</h4>
       <p class="text-center">Get started with your free account</p>
-      <form #createGameForm = "ngForm" (ngSubmit)="onSubmit(createGameForm.value)" >
+      <form #registerForm = "ngForm" (ngSubmit)="onSubmit(registerForm.value)" >
         <div class="form-group input-group">
           <div class="input-group-prepend">
             <span class="input-group-text"> <i><fa-icon [icon]="faUser"></fa-icon></i> </span>
@@ -56,7 +56,7 @@
           <input class="form-control" placeholder="Repeat password" type="password">
         </div> <!-- form-group// -->
         <div class="form-group">
-          <button type="submit" [disabled]="createGameForm.invalid" class="btn btn-primary btn-block"> Create Account  </button>
+          <button type="submit" [disabled]="registerForm.invalid" class="btn btn-primary btn-block"> Create Account  </button>
         </div> <!-- form-group// -->
         <p class="text-center">Have an account? <a routerLink="/login">Log In</a> </p>
       </form>

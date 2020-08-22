@@ -19,4 +19,12 @@ export class UserService {
   saveUserToLocalStorage(user: User): void{
     localStorage.setItem('user', JSON.stringify(user));
   }
+
+  getUserFromLocalStorage(): User{
+    return JSON.parse(localStorage.getItem('user'));
+  }
+
+  updateUser(user: User): Observable<User> {
+    return this.http.post<User>(`${this.host}/user/update`, user);
+  }
 }

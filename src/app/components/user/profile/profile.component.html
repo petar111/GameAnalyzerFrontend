@@ -17,10 +17,31 @@
 
       <ul class="list-group">
         <li class="list-group-item text-muted">Activity <i class="fa fa-dashboard fa-1x"></i></li>
-        <li class="list-group-item text-right"><span class="pull-left"><strong>Shares</strong></span> 125</li>
-        <li class="list-group-item text-right"><span class="pull-left"><strong>Likes</strong></span> 13</li>
-        <li class="list-group-item text-right"><span class="pull-left"><strong>Posts</strong></span> 37</li>
-        <li class="list-group-item text-right"><span class="pull-left"><strong>Followers</strong></span> 78</li>
+        <li class="list-group-item text-right"><span class="pull-left"><strong>Rank</strong></span> {{this.user.rank.name}}</li>
+        <li class="list-group-item text-right">
+          <span class="pull-left"><strong>Experience</strong></span> {{this.user.experience}}
+          <div class="container">
+            <div class="row">
+              <mat-progress-bar [value]="calculatePercentageExperience()"></mat-progress-bar>
+            </div>
+            <div class="row">
+              <div class="col-10 text-left"><span class="pull-left"><strong>To promotion</strong></span></div>
+               <div class="col-2 text-right">{{this.calculateToPromotion()}}</div>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item text-right">
+          <span class="pull-left"><a (click)="onFollowingClick()" ><strong>Following</strong></a></span> {{this.user.followingCount}}
+          <div *ngIf="this.followingEnabled" class="container">
+              <a *ngFor="let username of this.followingUsernames">  {{username}}  </a>
+          </div>
+        </li>
+        <li class="list-group-item text-right">
+          <span class="pull-left"><a (click)="onFollowersClick()" ><strong>Followers</strong></a></span> {{this.user.followersCount}}
+          <div *ngIf="this.followersEnabled" class="container">
+            <a *ngFor="let username of this.followersUsernames">  {{username}}  </a>
+          </div>
+        </li>
       </ul>
 
       <div class="panel panel-default">
@@ -64,14 +85,23 @@
 
               <div class="col-xs-6">
                 <label for="email"><h4>Email</h4></label>
-                <input type="email" class="form-control" name="email" [(ngModel)]="this.user.email" id="email" placeholder="you@email.com" title="enter your email.">
+                <input type="email" class="form-control" name="email"  [(ngModel)]="this.user.email" id="email" placeholder="you@email.com" title="enter your email.">
               </div>
             </div>
             <div class="form-group">
 
               <div class="col-xs-6">
                 <label for="email"><h4>Country</h4></label>
-                <input type="email" class="form-control" name="country" id="location" [(ngModel)]="this.user.country" placeholder="somewhere" title="enter a location">
+                <input type="text" class="form-control" name="country" id="location"  [(ngModel)]="this.user.country" placeholder="somewhere" title="enter a location">
+                <hr>
+                <div *ngIf="this.countryNames !== undefined && this.countryNames !== null" class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Choose country
+                  </button>
+                  <div  class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" (click)="onCountryClick(countryName)" *ngFor="let countryName of this.countryNames;index as i">{{countryName}}</a>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="form-group">

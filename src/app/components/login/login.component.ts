@@ -39,6 +39,7 @@ export class LoginComponent implements OnInit {
           this.notifierService.notify('error', error.error.message);
         }else{
           // A server-side error
+          console.log(error);
           this.notifierService.notify('error', error.statusText + ' ' + error.body);
         }
       })

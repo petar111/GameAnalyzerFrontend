@@ -27,4 +27,12 @@ export class UserService {
   updateUser(user: User): Observable<User> {
     return this.http.post<User>(`${this.host}/user/update`, user);
   }
+
+  getAllFollowingUsernames(user: User): Observable<string[]> {
+    return this.http.get<string[]>(`${this.host}/user/${user.id}/following`);
+  }
+
+  getAllFollowersUsernames(user: User): Observable<string[]> {
+    return this.http.get<string[]>(`${this.host}/user/${user.id}/followers`);
+  }
 }

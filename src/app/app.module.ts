@@ -24,6 +24,7 @@ import { GameSessionDetailsComponent } from './components/user/game-session/game
 import { ProfileComponent } from './components/user/profile/profile.component';
 import { SubmitScoreComponent } from './components/dialog/submit-score/submit-score.component';
 import { RegisterComponent } from './components/user/register/register.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { RegisterComponent } from './components/user/register/register.component
     NotifierModule,
     FontAwesomeModule,
     MatDialogModule,
-    MatButtonModule
+    MatButtonModule,
+    MatProgressBarModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

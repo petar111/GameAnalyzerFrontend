@@ -6,6 +6,7 @@
       <th scope="col">ExternalInfo</th>
       <th scope="col">Description</th>
       <th scope="col">Created by</th>
+      <th scope="col">Verification status</th>
     </tr>
   </thead>
   <tbody>
@@ -15,6 +16,7 @@
           <td><a href="{{game.externalInfo}}">{{game.externalInfo}}</a></td>
           <td>{{game.description}}</td>
           <td><a class="text-primary" href="#">{{game.creatorUsername}}</a></td>
+          <td>{{game.verificationStatus.name}}</td>
       </tr>
   </tbody>
 

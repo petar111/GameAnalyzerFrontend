@@ -1,6 +1,7 @@
 import {Strategy} from './Strategy';
 import {Player} from './Player';
 import {User} from './User';
+import {VerificationStatus} from './VerificationStatus';
 
 export class Game{
   public creator: User;
@@ -10,6 +11,7 @@ export class Game{
   public description: string;
   public strategies: Strategy[];
   public players: Player[];
+  public verificationStatus: VerificationStatus;
 
   constructor() {
   }

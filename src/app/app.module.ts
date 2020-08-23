@@ -25,6 +25,7 @@ import { ProfileComponent } from './components/user/profile/profile.component';
 import { SubmitScoreComponent } from './components/dialog/submit-score/submit-score.component';
 import { RegisterComponent } from './components/user/register/register.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { UserGamesComponent } from './components/user/user-games/user-games.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     GameSessionDetailsComponent,
     ProfileComponent,
     SubmitScoreComponent,
-    RegisterComponent
+    RegisterComponent,
+    UserGamesComponent
   ],
   imports: [
     BrowserModule,

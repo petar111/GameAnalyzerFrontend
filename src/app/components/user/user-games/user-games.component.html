@@ -1,0 +1,5 @@
+<div *ngIf="this.games !== undefined" class="container">
+  <div *ngFor="let game of this.games" class="row">
+    <p>{{game.name}}</p>
+  </div>
+</div>

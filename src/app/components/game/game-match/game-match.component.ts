@@ -122,12 +122,14 @@ export class GameMatchComponent implements OnInit, OnDestroy {
             gameScore.user = JSON.parse(localStorage.getItem('user'));
             this.gameService.submitScore(gameScore).subscribe(
               response => {
-                this.userService.updateUserExperience(response.experience).subscribe(
-                  response2 => {
-                    this.userService.saveUserToLocalStorage(response2.user);
-                    this.notifierService.notify('success', response2.message);
-                  }
-                );
+                if (response.experience !== undefined){
+                  this.userService.updateUserExperience(response.experience).subscribe(
+                    response2 => {
+                      this.userService.saveUserToLocalStorage(response2.user);
+                      this.notifierService.notify('success', response2.message);
+                    }
+                  );
+                }
                 this.notifierService.notify('info', response.message);
               }
             );

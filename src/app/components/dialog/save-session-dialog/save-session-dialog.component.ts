@@ -1,6 +1,7 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit} from '@angular/core';
 import {SaveSessionOptions} from '../../../enum/save-session-options.enum';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {GameSession} from '../../../model/match/GameSession';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-save-session-dialog',
@@ -12,11 +13,23 @@ export class SaveSessionDialogComponent implements OnInit {
   public overwriteExistingOption = SaveSessionOptions.OVERWRITE_EXISTING;
   public isNewGameSession: boolean;
   public cancel = SaveSessionOptions.CANCEL;
-  constructor(@Inject(MAT_DIALOG_DATA) public gameSessionData: any) {
-    this.isNewGameSession = gameSessionData.id !== undefined && gameSessionData.id != null;
+  @Input() public gameSessionData: GameSession;
+  constructor(private activeModal: NgbActiveModal) {
   }
 
   ngOnInit(): void {
+    this.isNewGameSession = this.gameSessionData.id !== undefined && this.gameSessionData.id != null;
   }
 
+  onCancelClick(): void {
+    this.activeModal.close(this.cancel);
+  }
+
+  onSaveClick(): void {
+    this.activeModal.close(this.saveAsNewOption);
+  }
+
+  onOverwriteExistingClick(): void {
+    this.activeModal.close(this.overwriteExistingOption);
+  }
 }

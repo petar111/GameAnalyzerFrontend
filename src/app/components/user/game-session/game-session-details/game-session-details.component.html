@@ -1,12 +1,16 @@
-<h2 mat-dialog-title>Game analyzer</h2>
-<mat-dialog-content class="mat-typography">
+<div class="modal-header">
+  <div class="modal-title">
+    <h2>Game analyzer</h2>
+  </div>
+</div>
+<div class="modal-body">
 
   <div class="row">
 
     <div class="col-4">
       <div class="row">
         <div class="col">
-          Total rounds: {{this.data.gameSessionData.numberOfRounds}}
+          Total rounds: {{this.gameSession.numberOfRounds}}
         </div>
       </div>
       <div class="row">
@@ -49,13 +53,13 @@
     <div class="border border-dark col-8">
       <div class="container">
         <div class="row">
-          <p>{{this.data.gameSessionData.game.name}}</p>
+          <p>{{this.gameSession.game.name}}</p>
         </div>
         <div class="row">
-          <a href="{{this.data.gameSessionData.game.externalInfo}}">Get external info here</a>
+          <a href="{{this.gameSession.game.externalInfo}}">Get external info here</a>
         </div>
         <div class="row">
-          <p>{{this.data.gameSessionData.game.description}}</p>
+          <p>{{this.gameSession.game.description}}</p>
         </div>
       </div>
 
@@ -104,8 +108,8 @@
 
   </div>
 
-</mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-button mat-dialog-close>Close</button>
-  <button mat-button mat-dialog-close [mat-dialog-close]="loadGameSession">Load</button>
-</mat-dialog-actions>
+</div>
+<div class="modal-footer">
+  <button  class="btn btn-secondary" (click)="onCloseClick()" >Close</button>
+  <button ngbTooltip="This will transfer you to match page with this session loaded." placement="bottom" class="btn btn-primary" (click)="onLoadClick()" >Load</button>
+</div>

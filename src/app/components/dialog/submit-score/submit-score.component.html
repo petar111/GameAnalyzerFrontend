@@ -1,8 +1,12 @@
-<h2 mat-dialog-title>Game analyzer</h2>
-<mat-dialog-content class="mat-typography">
+<div class="modal-header">
+  <div class="modal-title">
+    <h2>Game analyzer</h2>
+  </div>
+</div>
+<div class="modal-body">
   <h3>You have reached {{numberOfRounds}} rounds. Do you want to submit your score? If you submit, you can increase your exp.</h3>
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button [mat-dialog-close]="cancel">Cancel</button>
-  <button mat-button [mat-dialog-close]="submit" cdkFocusInitial>Submit</button>
-</mat-dialog-actions>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-secondary" (click)="onCancelClick()" >Cancel</button>
+  <button class="btn btn-primary" (click)="onSubmitClick()" >Submit</button>
+</div>

@@ -17,15 +17,13 @@ import { LoginComponent } from './components/login/login.component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {CustomHttpInterceptor} from './interceptor/CustomHttpInterceptor';
 import { GameSessionComponent } from './components/user/game-session/game-session.component';
-import {MatDialogModule} from '@angular/material/dialog';
 import { SaveSessionDialogComponent } from './components/dialog/save-session-dialog/save-session-dialog.component';
-import {MatButtonModule} from '@angular/material/button';
 import { GameSessionDetailsComponent } from './components/user/game-session/game-session-details/game-session-details.component';
 import { ProfileComponent } from './components/user/profile/profile.component';
 import { SubmitScoreComponent } from './components/dialog/submit-score/submit-score.component';
 import { RegisterComponent } from './components/user/register/register.component';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { UserGamesComponent } from './components/user/user-games/user-games.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -54,9 +52,7 @@ import { UserGamesComponent } from './components/user/user-games/user-games.comp
     FormsModule,
     NotifierModule,
     FontAwesomeModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatProgressBarModule
+    NgbModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

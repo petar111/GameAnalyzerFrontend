@@ -1,6 +1,6 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {SubmitScoreOption} from '../../../enum/submit-score-option.enum';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-submit-score',
@@ -10,12 +10,18 @@ import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 export class SubmitScoreComponent implements OnInit {
   cancel = SubmitScoreOption.CANCEL;
   submit = SubmitScoreOption.SUBMIT;
-  numberOfRounds: number;
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
-    this.numberOfRounds = data.numberOfRounds;
+  @Input() numberOfRounds: number;
+  constructor(private activeModal: NgbActiveModal) {
   }
 
   ngOnInit(): void {
   }
 
+  onCancelClick(): void {
+    this.activeModal.close(this.cancel);
+  }
+
+  onSubmitClick(): void {
+    this.activeModal.close(this.submit);
+  }
 }

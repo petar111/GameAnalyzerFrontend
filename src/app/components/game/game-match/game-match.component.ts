@@ -8,14 +8,13 @@ import {GameSession} from '../../../model/match/GameSession';
 import {PlayerMatch} from '../../../model/match/PlayerMatch';
 import {NotifierService} from 'angular-notifier';
 import {PlayedStrategy} from '../../../model/match/PlayedStrategy';
-import {MatDialog} from '@angular/material/dialog';
 import {SaveSessionDialogComponent} from '../../dialog/save-session-dialog/save-session-dialog.component';
-import {logger} from 'codelyzer/util/logger';
 import {SaveSessionOptions} from '../../../enum/save-session-options.enum';
 import {SubmitScoreComponent} from '../../dialog/submit-score/submit-score.component';
 import {SubmitScoreOption} from '../../../enum/submit-score-option.enum';
 import {GameScore} from '../../../model/score/GameScore';
 import {UserService} from '../../../service/user.service';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-game-match',
@@ -41,7 +40,7 @@ export class GameMatchComponent implements OnInit, OnDestroy {
               private router: Router,
               private notifierService: NotifierService,
               private userService: UserService,
-              private saveSessionDialog: MatDialog) { }
+              private saveSessionDialog: NgbModal) { }
 
   ngOnInit(): void {
     if (localStorage.getItem('gameSession') !== null && localStorage.getItem('gameSession') !== undefined){
@@ -61,6 +60,8 @@ export class GameMatchComponent implements OnInit, OnDestroy {
         console.log(JSON.stringify(this.gameSession));
         console.log(JSON.stringify(this.playerRow));
         console.log(this.playerColumn);
+      }, reason => {
+        console.log(reason);
       }
     );
   }
@@ -103,38 +104,35 @@ export class GameMatchComponent implements OnInit, OnDestroy {
       case 20:
       case 50:
       case 100:
-        const dialog = this.saveSessionDialog.open(SubmitScoreComponent, {
-          data: {
-            numberOfRounds: this.gameSession.numberOfRounds
+        const dialog = this.saveSessionDialog.open(SubmitScoreComponent, {centered: true});
+        dialog.componentInstance.numberOfRounds = this.gameSession.numberOfRounds;
+        dialog.result.then(data => {
+          if (data === undefined || data === null || data === SubmitScoreOption.CANCEL){
+            return;
           }
-        } );
-        dialog.afterClosed().subscribe(
-          data => {
-            if (data === undefined || data === null || data === SubmitScoreOption.CANCEL){
-              return;
-            }
 
-            const gameScore: GameScore = new GameScore();
-            gameScore.game = this.gameSession.game;
-            gameScore.numberOfRounds = this.gameSession.numberOfRounds;
-            gameScore.totalPayoff = this.playerRow.totalPayoff;
-            gameScore.player = this.playerRow.player;
-            gameScore.user = JSON.parse(localStorage.getItem('user'));
-            this.gameService.submitScore(gameScore).subscribe(
-              response => {
-                if (response.experience !== undefined){
-                  this.userService.updateUserExperience(response.experience).subscribe(
-                    response2 => {
-                      this.userService.saveUserToLocalStorage(response2.user);
-                      this.notifierService.notify('success', response2.message);
-                    }
-                  );
-                }
-                this.notifierService.notify('info', response.message);
+          const gameScore: GameScore = new GameScore();
+          gameScore.game = this.gameSession.game;
+          gameScore.numberOfRounds = this.gameSession.numberOfRounds;
+          gameScore.totalPayoff = this.playerRow.totalPayoff;
+          gameScore.player = this.playerRow.player;
+          gameScore.user = JSON.parse(localStorage.getItem('user'));
+          this.gameService.submitScore(gameScore).subscribe(
+            response => {
+              if (response.experience !== undefined){
+                this.userService.updateUserExperience(response.experience).subscribe(
+                  response2 => {
+                    this.userService.saveUserToLocalStorage(response2.user);
+                    this.notifierService.notify('success', response2.message);
+                  }
+                );
               }
-            );
-          }
-        );
+              this.notifierService.notify('info', response.message);
+            }
+          );
+        }, reason => {
+          console.log(reason);
+        });
         break;
     }
   }
@@ -152,12 +150,9 @@ export class GameMatchComponent implements OnInit, OnDestroy {
   }
 
   onSaveSession(): void {
-    const dialog = this.saveSessionDialog.open(SaveSessionDialogComponent, {
-      data: {
-        id: this.gameSession.id
-      }
-    } );
-    dialog.afterClosed().subscribe(data => {
+    const dialog = this.saveSessionDialog.open(SaveSessionDialogComponent, {centered: true});
+    dialog.componentInstance.gameSessionData = this.gameSession;
+    dialog.result.then(data => {
       if (data === undefined || data === null || data === SaveSessionOptions.CANCEL){
         return;
       }
@@ -177,6 +172,8 @@ export class GameMatchComponent implements OnInit, OnDestroy {
           this.notifierService.notify('error', 'Game session saving is failed.');
         }
       );
+    }, reason => {
+      console.log(reason);
     });
   }
 

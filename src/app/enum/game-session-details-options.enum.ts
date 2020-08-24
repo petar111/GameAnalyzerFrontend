@@ -1,3 +1,4 @@
 export enum GameSessionDetailsOptions {
-  LOAD_GAME_SESSION
+  LOAD_GAME_SESSION,
+  CANCEL
 }

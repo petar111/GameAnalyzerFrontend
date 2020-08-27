@@ -17,28 +17,55 @@
 
       <ul class="list-group">
         <li class="list-group-item text-muted">Activity <i class="fa fa-dashboard fa-1x"></i></li>
-        <li class="list-group-item text-right"><span class="pull-left"><strong>Rank</strong></span> {{this.user.rank.name}}</li>
-        <li class="list-group-item text-right">
-          <span class="pull-left"><strong>Experience</strong></span> {{this.user.experience}}
-          <div class="container">
-            <div class="row">
+        <li class="list-group-item text-left">
+          <div class="row">
+            <div class="col">
+              <span class="pull-left"><strong>Rank</strong></span>
             </div>
-            <div class="row">
-              <div class="col-10 text-left"><span class="pull-left"><strong>To promotion</strong></span></div>
-               <div class="col-2 text-right">{{this.calculateToPromotion()}}</div>
+            <div class="col text-right">
+              {{this.user.rank.name}}
             </div>
           </div>
         </li>
-        <li class="list-group-item text-right">
-          <span class="pull-left"><a (click)="onFollowingClick()" ><strong>Following</strong></a></span> {{this.user.followingCount}}
-          <div *ngIf="this.followingEnabled" class="container">
-              <a *ngFor="let username of this.followingUsernames">  {{username}}  </a>
+        <li class="list-group-item text-left">
+            <div class="row">
+              <div class="col">
+                <span class="pull-left"><strong>Experience</strong></span>
+              </div>
+              <div class="col text-right">
+                {{this.user.experience}}
+              </div>
+            </div>
+          <p><ngb-progressbar type="primary" [value]="calculatePercentageExperience()"></ngb-progressbar></p>
+            <div class="row">
+              <div class="col text-left"><span class="pull-left"><strong>To promotion</strong></span></div>
+               <div class="col text-right">{{this.calculateToPromotion()}}</div>
+            </div>
+        </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col">
+              <span class="pull-left"><a (click)="onFollowingClick()" ><strong>Following</strong></a></span>
+            </div>
+            <div *ngIf="this.followingCount !== undefined" class="col text-right">
+              {{this.followingCount}}
+            </div>
+          </div>
+          <div class="row" *ngIf="this.followingEnabled">
+            <a class="follow_profile_link" *ngFor="let username of this.followingUsernames">  {{username}}  </a>
           </div>
         </li>
-        <li class="list-group-item text-right">
-          <span class="pull-left"><a (click)="onFollowersClick()" ><strong>Followers</strong></a></span> {{this.user.followersCount}}
-          <div *ngIf="this.followersEnabled" class="container">
-            <a *ngFor="let username of this.followersUsernames">  {{username}}  </a>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col">
+              <span class="pull-left"><a (click)="onFollowersClick()" ><strong>Followers</strong></a></span>
+            </div>
+            <div *ngIf="this.followersCount !== undefined" class="col text-right">
+              {{this.followersCount}}
+            </div>
+          </div>
+          <div class="row" *ngIf="this.followersEnabled">
+                <a class="follow_profile_link" *ngFor="let username of this.followersUsernames" >  {{username}}  </a>
           </div>
         </li>
       </ul>
@@ -75,8 +102,8 @@
             <div class="form-group">
 
               <div class="col-xs-6">
-                <label for="last_name"><h4>Date of birth</h4></label>
-                <input type="date" class="form-control" name="lastName" [(ngModel)]="this.user.dateOfBirth" id="date_of_birth" placeholder="Da" title="enter your last name if any.">
+                <label for="date_of_birth"><h4>Date of birth</h4></label>
+                <input type="date" class="form-control" name="dateOfBirth" [(ngModel)]="this.user.dateOfBirth" id="date_of_birth"  title="enter your last name if any.">
               </div>
             </div>
 

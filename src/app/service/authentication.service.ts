@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {LoginRequest} from '../model/LoginRequest';
 import {User} from '../model/User';
 import {HttpClient, HttpErrorResponse, HttpResponse} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {JwtHelperService} from '@auth0/angular-jwt';
+import {RegisterRequest} from '../model/RegisterRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -14,12 +15,15 @@ export class AuthenticationService {
   public host = environment.apiUrl;
   public token: string;
   private jwtHelper = new JwtHelperService();
-  constructor(private httpClient: HttpClient) { }
+
+  constructor(private httpClient: HttpClient) {
+  }
 
   login(loginRequest: LoginRequest): Observable<HttpResponse<User>> {
     return this.httpClient.post<User>(`${this.host}/login`, loginRequest, {observe: 'response'});
   }
-  logout(): void{
+
+  logout(): void {
     localStorage.setItem('token', null);
     localStorage.setItem('user', null);
   }
@@ -34,25 +38,30 @@ export class AuthenticationService {
   getToken(): string {
     return localStorage.getItem('token');
   }
-  loadToken(): void{
+
+  loadToken(): void {
     this.token = localStorage.getItem('token');
   }
 
   isUserAuthenticated(): boolean {
     this.loadToken();
-    if (this.token === null || this.token === ''){
+    if (this.token === null || this.token === '') {
       return false;
     }
-    if (this.jwtHelper.decodeToken(this.token).sub === null || this.jwtHelper.decodeToken(this.token).sub === ''){
+    if (this.jwtHelper.decodeToken(this.token).sub === null || this.jwtHelper.decodeToken(this.token).sub === '') {
       return false;
     }
-    if (this.jwtHelper.isTokenExpired(this.token)){
+    if (this.jwtHelper.isTokenExpired(this.token)) {
       return false;
     }
     return true;
   }
 
-  register(value: User): Observable<HttpResponse<User>> {
-    return this.httpClient.post<User>(`${this.host}/register`, value , {observe: 'response'});
+  register(value: RegisterRequest): Observable<HttpResponse<User>> {
+    console.log(`${this.host}/register`);
+    return this.httpClient.post<User>(`${this.host}/register`, value, {
+      observe: 'response',
+      headers: {'Content-type': `application/json`}
+    });
   }
 }

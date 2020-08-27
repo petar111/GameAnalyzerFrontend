@@ -35,4 +35,11 @@ export class UserService {
   getAllFollowersUsernames(user: User): Observable<string[]> {
     return this.http.get<string[]>(`${this.host}/user/${user.id}/followers`);
   }
+
+  getFollowersCount(user: User): Observable<number> {
+    return this.http.get<number>(`${this.host}/user/${user.id}/followers/count`);
+  }
+  getFollowingCount(user: User): Observable<number> {
+    return this.http.get<number>(`${this.host}/user/${user.id}/following/count`);
+  }
 }

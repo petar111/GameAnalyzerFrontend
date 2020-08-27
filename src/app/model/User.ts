@@ -14,8 +14,6 @@ export class User{
   public isCredentialsNonExpired: boolean;
   public isEnabled: boolean;
   public experience: number;
-  public followersCount: number;
-  public followingCount: number;
   public rank: Rank;
   constructor() {
   }

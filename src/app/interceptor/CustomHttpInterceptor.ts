@@ -11,7 +11,8 @@ export class CustomHttpInterceptor implements HttpInterceptor{
   }
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>{
 
-    if (request.url === `${this.hostUrl}/login` || request.url === `${this.hostUrl}/auth/login`){
+    if (request.url === `${this.hostUrl}/login` || request.url === `${this.hostUrl}/auth/login`
+      || request.url === `${this.hostUrl}/register` || request.url === `${this.hostUrl}/auth/register`){
       return next.handle(request);
     }
     request = request.clone({

@@ -19,6 +19,8 @@ export class ProfileComponent implements OnInit {
 
   public followersEnabled = false;
   public followersUsernames: string[];
+  followingCount: any;
+  followersCount: any;
   constructor(private userService: UserService,
               private notifierService: NotifierService,
               private router: Router,
@@ -31,6 +33,16 @@ export class ProfileComponent implements OnInit {
     this.externalService.getAllCountries().subscribe(
       data => {
         this.countryNames = data.map((val) => val.name );
+      }
+    );
+    this.userService.getFollowersCount(this.user).subscribe(
+      data => {
+        this.followersCount = data;
+      }
+    );
+    this.userService.getFollowingCount(this.user).subscribe(
+      data => {
+        this.followingCount = data;
       }
     );
   }

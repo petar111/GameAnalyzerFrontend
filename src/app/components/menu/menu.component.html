@@ -9,9 +9,6 @@
       <li class="nav-item">
         <a class="nav-link" routerLink="/home" >Home</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/user/profile">Profile</a>
-      </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Game
@@ -26,9 +23,19 @@
         </div>
       </li>
     </ul>
-      <p class="text-primary" *ngIf="this.loggedUser !== null">{{this.loggedUser.username}}</p>
 
-    <form class="form-inline my-2 my-lg-0">
+
+    <form class="form-inline ">
+      <div *ngIf="this.loggedUser !== null" class="dropdown my-2 my-sm-0">
+        <button class="btn btn-outline-primary dropdown-toggle my-2 mx-3 my-lg-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{this.loggedUser.username}}
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" routerLink="/user/profile" >Profile</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item mt-3" (click)="onLogout()">Logout</a>
+        </div>
+      </div>
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>

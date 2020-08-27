@@ -4,6 +4,7 @@ import {AuthenticationService} from '../../../service/authentication.service';
 import {UserService} from '../../../service/user.service';
 import {Router} from '@angular/router';
 import {User} from '../../../model/User';
+import {RegisterRequest} from '../../../model/RegisterRequest';
 
 @Component({
   selector: 'app-register',
@@ -24,16 +25,16 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(value: any): void {
-    const user: User = new User();
-    user.username = value.username;
-    user.firstName = value.firstName;
-    user.lastName = value.lastName;
-    user.country = value.country;
-    user.dateOfBirth = value.dateOfBirth;
-    user.email = value.email;
-    user.password = value.password;
-    user.username = value.username;
-    this.authenticationService.register(user).subscribe(
+    const registerRequest: RegisterRequest = new RegisterRequest();
+    registerRequest.username = value.username;
+    registerRequest.firstName = value.firstName;
+    registerRequest.lastName = value.lastName;
+    registerRequest.country = value.country;
+    registerRequest.dateOfBirth = value.dateOfBirth;
+    registerRequest.email = value.email;
+    registerRequest.password = value.password;
+    registerRequest.username = value.username;
+    this.authenticationService.register(registerRequest).subscribe(
       data => {
         this.authenticationService.saveAuthenticationData(data);
         this.router.navigateByUrl('');

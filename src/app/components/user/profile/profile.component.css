@@ -1,0 +1,11 @@
+.follow_profile_link{
+  color: deepskyblue;
+  margin-right: 10px;
+}
+
+.follow_profile_link:hover{
+  color: purple;
+}
+
+
+

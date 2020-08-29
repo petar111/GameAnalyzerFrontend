@@ -10,6 +10,7 @@ import {Payoff} from '../model/Payoff';
 import {GameAdviceData} from '../model/GameAdviceData';
 import {GameScore} from '../model/score/GameScore';
 import {User} from '../model/User';
+import {VerificationRequest} from '../model/VerificationRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -57,4 +58,10 @@ export class GameService {
   }
 
 
+  requestVerification(game: GameInfo, user: User): Observable<any> {
+    const verificationRequest = new VerificationRequest();
+    verificationRequest.gameId = game.id;
+    verificationRequest.userId = user.id;
+    return this.http.post<any>(`${this.host}/game/request-verification`, verificationRequest);
+  }
 }

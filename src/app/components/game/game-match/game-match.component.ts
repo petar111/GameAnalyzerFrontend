@@ -43,7 +43,7 @@ export class GameMatchComponent implements OnInit, OnDestroy {
               private saveSessionDialog: NgbModal) { }
 
   ngOnInit(): void {
-    if (localStorage.getItem('gameSession') !== null && localStorage.getItem('gameSession') !== undefined){
+    if (localStorage.getItem('gameSession') !== undefined  && localStorage.getItem('gameSession') !== null) {
       this.gameSession = JSON.parse(localStorage.getItem('gameSession'));
       this.initPlayers();
       return;

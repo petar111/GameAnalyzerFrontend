@@ -1,5 +1,20 @@
-<div *ngIf="this.games !== undefined" class="container">
-  <div *ngFor="let game of this.games" class="row">
-    <p>{{game.name}}</p>
+
+
+<div *ngIf="this.games !== undefined">
+  <div *ngFor="let game of this.games" class="card" style="width: 80%; margin: 20px">
+    <div class="card-header">
+      <h5 class="card-title">{{game.name}}</h5>
+      <p class="card-text">{{game.externalInfo}}</p>
+    </div>
+    <div class="card-body text-primary bg-secondary">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item text-white bg-secondary">{{game.description}}</li>
+        <li class="list-group-item text-white bg-secondary">{{game.verificationStatus.name}}</li>
+      </ul>
+    </div>
+    <div class="card-footer">
+      <button *ngIf="!isGameVerified(game)" (click)="onAttemptVerification(game)" class="btn btn-primary" style="margin: 10px">Attempt verification</button>
+      <button class="btn btn-primary">New game match</button>
+    </div>
   </div>
 </div>

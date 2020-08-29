@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {LoginComponent} from './components/login/login.component';
 import {RegisterComponent} from './components/user/register/register.component';
+import {faChessKing} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +11,7 @@ import {RegisterComponent} from './components/user/register/register.component';
 export class AppComponent {
   title = 'games-client';
   isLoginComponent = false;
+  faChess = faChessKing;
   public onRouterOutletActivate(event: any): void {
     if (event instanceof LoginComponent || event instanceof RegisterComponent){
       this.isLoginComponent = true;

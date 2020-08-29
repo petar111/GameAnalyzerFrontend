@@ -15,3 +15,18 @@
   right: 0;
   opacity: 0;
 }
+
+.card{
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,66,121,0) 0%, rgba(0,212,255,1) 85%);
+  overflow: hidden;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  margin-bottom: 15px;
+}
+
+h1{
+  font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+p{
+
+}

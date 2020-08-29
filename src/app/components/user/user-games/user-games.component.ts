@@ -5,6 +5,8 @@ import {Subscription} from 'rxjs';
 import {User} from '../../../model/User';
 import {UserService} from '../../../service/user.service';
 import {NotifierService} from 'angular-notifier';
+import {Game} from '../../../model/Game';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-user-games',
@@ -18,7 +20,8 @@ export class UserGamesComponent implements OnInit, OnDestroy {
   private user: User;
   constructor(private gameService: GameService,
               private userService: UserService,
-              private notifierService: NotifierService) { }
+              private notifierService: NotifierService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.user = this.userService.getUserFromLocalStorage();
@@ -45,5 +48,16 @@ export class UserGamesComponent implements OnInit, OnDestroy {
         this.notifierService.notify('info', data.message);
       }
     );
+  }
+
+  async onNewGameMatch(game: GameInfo): Promise<void> {
+    let wholeGame: Game;
+    await this.gameService.getGameById(game.id).then(
+      (data) => {
+        wholeGame = data;
+      }
+    );
+    this.gameService.makeNewGameSessionAndSaveItToLocalStorage(wholeGame);
+    this.router.navigateByUrl('game/match');
   }
 }

@@ -55,6 +55,7 @@ export class ProfileComponent implements OnInit {
     this.userService.updateUser(this.user).subscribe(
       data => {
         this.userService.saveUserToLocalStorage(data);
+        this.user = this.userService.getUserFromLocalStorage();
         this.notifierService.notify('success', 'Your profile has been modified.');
       }
     );

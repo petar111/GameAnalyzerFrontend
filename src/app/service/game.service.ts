@@ -11,6 +11,7 @@ import {GameAdviceData} from '../model/GameAdviceData';
 import {GameScore} from '../model/score/GameScore';
 import {User} from '../model/User';
 import {VerificationRequest} from '../model/VerificationRequest';
+import {PlayerMatch} from '../model/match/PlayerMatch';
 
 @Injectable({
   providedIn: 'root'
@@ -53,6 +54,10 @@ export class GameService {
     return this.http.get<GameAdviceData>(`${this.host}/game/${game.id}/advice`);
   }
 
+  getGameById(gameId: number): Promise<Game> {
+    return this.http.get<Game>(`${this.host}/game/${gameId}`).toPromise();
+  }
+
   submitScore(gameScore: GameScore): Observable<any> {
     return this.http.post<any>(`${this.host}/game/score/submit`, gameScore, {headers: {'Content-type': `application/json`}});
   }
@@ -63,5 +68,17 @@ export class GameService {
     verificationRequest.gameId = game.id;
     verificationRequest.userId = user.id;
     return this.http.post<any>(`${this.host}/game/request-verification`, verificationRequest);
+  }
+
+  makeNewGameSessionAndSaveItToLocalStorage(game: Game): void {
+    const gameSession = new GameSession();
+
+    gameSession.game = game;
+    gameSession.players
+      .push(new PlayerMatch(gameSession.game.players.find(p => p.name === 'Player1'), 'PlayerRow'));
+    gameSession.players
+      .push(new PlayerMatch(gameSession.game.players.find(p => p.name === 'Player2'), 'PlayerColumn'));
+
+    localStorage.setItem('gameSession', JSON.stringify(gameSession));
   }
 }

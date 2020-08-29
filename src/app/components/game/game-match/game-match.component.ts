@@ -46,24 +46,10 @@ export class GameMatchComponent implements OnInit, OnDestroy {
     if (localStorage.getItem('gameSession') !== undefined  && localStorage.getItem('gameSession') !== null) {
       this.gameSession = JSON.parse(localStorage.getItem('gameSession'));
       this.initPlayers();
-      return;
+    }else{
+      alert('You have to select a game first.');
+      this.router.navigateByUrl('game/all');
     }
-    this.gameSession = new GameSession();
-    this.gameService.getGameByName('CustomGame1').subscribe(
-      data => {
-        this.gameSession.game = data;
-        this.gameSession.players
-          .push(new PlayerMatch(this.gameSession.game.players.find(p => p.name === 'Player1'), this.playerRowName));
-        this.gameSession.players
-          .push(new PlayerMatch(this.gameSession.game.players.find(p => p.name === 'Player2'), this.playerColumnName));
-        this.initPlayers();
-        console.log(JSON.stringify(this.gameSession));
-        console.log(JSON.stringify(this.playerRow));
-        console.log(this.playerColumn);
-      }, reason => {
-        console.log(reason);
-      }
-    );
   }
 
   getPlayerColumnPayoffAmount(playedStrategy: Strategy, opposingStrategy: Strategy): number {
@@ -141,7 +127,9 @@ export class GameMatchComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    localStorage.setItem('gameSession', JSON.stringify(this.gameSession));
+    if (this.gameSession !== undefined){
+      localStorage.setItem('gameSession', JSON.stringify(this.gameSession));
+    }
   }
 
   private initPlayers(): void {

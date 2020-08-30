@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {animate, state, style, transition, trigger, useAnimation} from '@angular/animations';
 import {bounce, fadeInLeft, slideInLeft} from 'ng-animate';
+import * as CanvasJS from '../../../assets/js/canvasjs.min.js';
 declare const myTest: any;
 
 @Component({
@@ -17,7 +18,7 @@ declare const myTest: any;
         width: '50%',
         height: 'auto'
       })),
-      transition('nonHover => hover', animate(500)),
+      transition('nonHover => hover', animate('0.5s 0.5s')),
       transition('hover => nonHover', animate(500))
     ]),
     trigger('bounce', [transition('* => *', useAnimation(bounce))]),
@@ -35,9 +36,31 @@ export class HomeComponent implements OnInit {
   expandOnHoverParagraph4 = false;
 
 
-  constructor() { }
 
   ngOnInit(): void {
+    const chart = new CanvasJS.Chart('chartContainer', {
+      animationEnabled: true,
+      exportEnabled: true,
+      title: {
+        text: 'Basic Column Chart in Angular'
+      },
+      data: [{
+        type: 'column',
+        dataPoints: [
+          { y: 71, label: 'Apple' },
+          { y: 55, label: 'Mango' },
+          { y: 50, label: 'Orange' },
+          { y: 65, label: 'Banana' },
+          { y: 95, label: 'Pineapple' },
+          { y: 68, label: 'Pears' },
+          { y: 28, label: 'Grapes' },
+          { y: 34, label: 'Lychee' },
+          { y: 14, label: 'Jackfruit' }
+        ]
+      }]
+    });
+
+    chart.render();
   }
 
   onMouseEnterParagraph1($event: MouseEvent): void {

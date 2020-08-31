@@ -24,6 +24,7 @@ import { SubmitScoreComponent } from './components/dialog/submit-score/submit-sc
 import { RegisterComponent } from './components/user/register/register.component';
 import { UserGamesComponent } from './components/user/user-games/user-games.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { LearnHowComponent } from './components/learn-how/learn-how.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ProfileComponent,
     SubmitScoreComponent,
     RegisterComponent,
-    UserGamesComponent
+    UserGamesComponent,
+    LearnHowComponent
   ],
   imports: [
     BrowserModule,

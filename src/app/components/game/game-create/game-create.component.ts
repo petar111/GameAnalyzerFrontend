@@ -44,12 +44,16 @@ export class GameCreateComponent implements OnInit {
     this.game.description = value[`description`];
     this.game.strategies = [];
     for (let i = 1; i <= this.numberOfStrategiesPlayerRow; i++) {
-      this.game.strategies.push(new Strategy(value[`S1_${i}`]));
-      this.game.players.find(p => p.name === 'Player1').playableStrategies.push(new Strategy(value[`S1_${i}`]));
+      if (this.game.strategies.find(strategy => strategy.name === value[`S1_${i}`]) === undefined){
+        this.game.strategies.push(new Strategy(value[`S1_${i}`]));
+        this.game.players.find(p => p.name === 'Player1').playableStrategies.push(new Strategy(value[`S1_${i}`]));
+      }
     }
     for (let i = 1; i <= this.numberOfStrategiesPlayerColumn; i++) {
-      this.game.strategies.push(new Strategy(value[`S2_${i}`]));
-      this.game.players.find(p => p.name === 'Player2').playableStrategies.push(new Strategy(value[`S2_${i}`]));
+      if (this.game.strategies.find(strategy => strategy.name === value[`S2_${i}`]) === undefined){
+        this.game.strategies.push(new Strategy(value[`S2_${i}`]));
+        this.game.players.find(p => p.name === 'Player2').playableStrategies.push(new Strategy(value[`S2_${i}`]));
+      }
     }
     for (let i = 1; i <= this.numberOfStrategiesPlayerRow; i++){
       for (let j = 1; j <= this.numberOfStrategiesPlayerColumn; j++){
@@ -67,8 +71,8 @@ export class GameCreateComponent implements OnInit {
     }
     this.gameService.createGame(this.game).subscribe(
       data => {
-        alert(data.message);
         this.router.navigateByUrl('');
+        alert(data.message);
       }
     );
   }

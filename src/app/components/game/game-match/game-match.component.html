@@ -1,19 +1,19 @@
-
-  <div class="row bg-med">
+<div class="container">
+  <div class="row">
     <div class="col-3 bg-white">
 
       <div class="row">
-        <div class="col">
+        <div class="col text-center text-primary font-weight-bold">
           Total rounds: {{this.gameSession.numberOfRounds}}
         </div>
       </div>
 
       <div class="row">
-        <div class="col">
+        <div class="col text-center">
           {{this.playerRow.player.name}}
         </div>
 
-        <div class="col">
+        <div class="col text-center">
           {{this.playerColumn.player.name}}
         </div>
 
@@ -24,13 +24,13 @@
           <a  data-toggle="collapse" href="#playerRowTotalPayoff" role="button" aria-expanded="false" aria-controls="collapseExample">
             Total payoff:
           </a>
-           {{this.playerRow.totalPayoff}}
+          {{this.playerRow.totalPayoff}}
         </div>
         <div class="col">
           <a data-toggle="collapse" href="#playerColumnTotalPayoff" role="button" aria-expanded="false" aria-controls="collapseExample">
             Total payoff:
           </a>
-             {{this.playerColumn.totalPayoff}}
+          {{this.playerColumn.totalPayoff}}
         </div>
       </div>
 
@@ -63,16 +63,30 @@
     </div>
 
     <div class="border border-dark col-8 bg-white">
-      <div class="container">
-        <div class="row">
-          <p>{{this.gameSession.game.name}}</p>
+
+      <div class="mb-3">
+        <div id="headingOne">
+          <h5 class="mb-0">
+            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              {{this.gameSession.game.name}}
+            </button>
+            <fa-icon *ngIf="this.gameSession.game.verificationStatus.name === 'VERIFIED' || this.gameSession.game.verificationStatus.name === 'WILDCARD_VERIFIED'" class="text-success" [icon]="faVerified"></fa-icon>
+          </h5>
         </div>
-        <div class="row">
-          <a href="{{this.gameSession.game.externalInfo}}">Get external info here</a>
+
+        <div class="collapse" id="collapseOne" aria-labelledby="headingOne">
+          <div class="container">
+            <div class="row">
+              <a href="{{this.gameSession.game.externalInfo}}">Get external info here</a>
+            </div>
+            <hr>
+            <div class="row">
+              <p>{{this.gameSession.game.description}}</p>
+            </div>
+          </div>
         </div>
-        <div class="row">
-          <p>{{this.gameSession.game.description}}</p>
-        </div>
+
+
       </div>
 
       <div class="container">
@@ -85,7 +99,7 @@
               <tr>
                 <th>#</th>
                 <td class="text-center" *ngFor="let strategyColumnRead of this.playerColumn.player.playableStrategies;index as i">
-                  <button  type="button" class="btn btn-primary">{{strategyColumnRead.name}}</button>
+                  <button disabled  type="button" class="btn btn-primary">{{strategyColumnRead.name}}</button>
                 </td>
               </tr>
               <tr *ngFor="let strategyRow of this.playerRow.player.playableStrategies; index as i">
@@ -120,35 +134,39 @@
 
 
         <div class="row d-flex align-content-start flex-wrap">
-            <button type="button" (click)="this.onMove()" class="btn btn-primary">Move</button>
-            <button type="button" class="btn btn-warning" (click)="this.onAdvice()" style="margin: 0px 5px">Advice</button>
-            <button class="btn btn-outline-primary" (click)="onSaveSession()">Save session</button>
+          <button type="button" (click)="this.onMove()" class="btn btn-primary m-3">Move</button>
+          <button type="button" class="btn btn-outline-primary m-3" (click)="this.onAdvice()" style="margin: 0px 5px">Advice</button>
+          <button class="btn btn-outline-primary m-3" (click)="onSaveSession()">Save session</button>
         </div>
 
 
       </div>
 
     </div>
-
   </div>
 
-  <div class="container bg-med" id="analyticsGroup">
+  <div class="container" id="analyticsGroup">
     Visual
-      <div class="collapse col-6" id="playerColumnTotalPayoff" data-parent="#analyticsGroup">
-        <div id="chartContainerPlayerColumn" class="bg-secondary"></div>
-      </div>
-      <div class="collapse col-6" id="playerColumnStrategiesPlayedChart" data-parent="#analyticsGroup">
-        <div id="chartStrategiesPlayerColumn" class="bg-secondary"></div>
-      </div>
+    <div class="collapse" id="playerColumnTotalPayoff" data-parent="#analyticsGroup">
+      <div id="chartContainerPlayerColumn"></div>
+    </div>
+    <div class="collapse" id="playerColumnStrategiesPlayedChart" data-parent="#analyticsGroup">
+      <div id="chartStrategiesPlayerColumn"></div>
+    </div>
 
-      <div class="collapse col-6" id="playerRowStrategiesPlayedChart" data-parent="#analyticsGroup">
-        <div id="chartStrategiesPlayerRow" class="bg-secondary"></div>
-      </div>
-      <div class="collapse col-6" id="playerRowTotalPayoff" data-parent="#analyticsGroup">
-        <div id="chartContainerPlayerRow" class="bg-secondary"></div>
-      </div>
+    <div class="collapse" id="playerRowStrategiesPlayedChart" data-parent="#analyticsGroup">
+      <div id="chartStrategiesPlayerRow"></div>
+    </div>
+    <div class="collapse" id="playerRowTotalPayoff" data-parent="#analyticsGroup">
+      <div id="chartContainerPlayerRow"></div>
+    </div>
 
   </div>
+
+</div>
+
+
+
 
 
 

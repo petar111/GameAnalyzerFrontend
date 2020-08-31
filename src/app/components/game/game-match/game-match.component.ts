@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {GameService} from '../../../service/game.service';
 import {NavigationEnd, NavigationStart, Router} from '@angular/router';
 import {Strategy} from '../../../model/Strategy';
@@ -18,6 +18,8 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 import * as CanvasJS from '../../../../assets/js/canvasjs.min.js';
 import {AnalyticChart} from '../../../model/AnalyticChart';
+import {faCheck} from '@fortawesome/free-solid-svg-icons';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-game-match',
@@ -33,6 +35,9 @@ import {AnalyticChart} from '../../../model/AnalyticChart';
 })
 export class GameMatchComponent implements OnInit, OnDestroy {
   fadeInRight = true;
+
+  faVerified = faCheck;
+
   public selectedStrategy = new Strategy('Not selected');
   public gameSession: GameSession;
   public playerRowName = 'playerRow';
@@ -44,7 +49,7 @@ export class GameMatchComponent implements OnInit, OnDestroy {
   public chartStrategiesPlayerRow: AnalyticChart;
   public chartStrategiesPlayerColumn: AnalyticChart;
   public strategiesPlayedPlayerRowDataPoints = [];
-
+  public subscriptions: Subscription[] = [];
 
   constructor(private gameService: GameService,
               private router: Router,
@@ -52,7 +57,12 @@ export class GameMatchComponent implements OnInit, OnDestroy {
               private userService: UserService,
               private saveSessionDialog: NgbModal) { }
 
+  @HostListener('window:beforeunload')
+  onUnload(): void {
+    localStorage.setItem('gameSession', JSON.stringify(this.gameSession));
+  }
   ngOnInit(): void {
+
     if (localStorage.getItem('gameSession') !== undefined  && localStorage.getItem('gameSession') !== null) {
       this.gameSession = JSON.parse(localStorage.getItem('gameSession'));
       this.initPlayers();
@@ -60,12 +70,6 @@ export class GameMatchComponent implements OnInit, OnDestroy {
       alert('You have to select a game first.');
       this.router.navigateByUrl('game/all');
     }
-
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        console.log('aaa');
-      }
-    });
     this.chartPlayerRow = this.initChart(this.playerRow, 'chartContainerPlayerRow');
     this.chartPlayerColumn = this.initChart(this.playerColumn, 'chartContainerPlayerColumn');
     this.chartStrategiesPlayerRow = this.initPieChart(this.playerRow, 'chartStrategiesPlayerRow');
@@ -82,6 +86,9 @@ export class GameMatchComponent implements OnInit, OnDestroy {
       theme: 'light2',
       animationEnabled: true,
       exportEnabled: true,
+      height: 400,
+      width: 500,
+      interactivityEnabled: false,
       title: {
         text: 'Strategies played'
       },
@@ -106,6 +113,9 @@ export class GameMatchComponent implements OnInit, OnDestroy {
     analyticChart.chartId = chartId;
     analyticChart.chart = new CanvasJS.Chart(chartId, {
       exportEnabled: true,
+      height: 400,
+      width: 500,
+      interactivityEnabled: false,
       title: {
         text: 'Total payoff at round'
       },
@@ -248,6 +258,9 @@ export class GameMatchComponent implements OnInit, OnDestroy {
     if (this.gameSession !== undefined){
       localStorage.setItem('gameSession', JSON.stringify(this.gameSession));
     }
+    this.subscriptions.forEach(
+      sub => sub.unsubscribe()
+    );
   }
 
   private initPlayers(): void {

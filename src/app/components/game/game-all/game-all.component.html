@@ -1,5 +1,6 @@
-<table class="table bg-white table-striped">
-  <thead class="thead-dark">
+<div *ngIf="collectionSize !== undefined && games !== undefined">
+  <table class="table bg-white table-striped">
+    <thead class="thead-dark">
     <tr>
       <th scope="col">#</th>
       <th scope="col">Name</th>
@@ -9,17 +10,35 @@
       <th scope="col">Verification status</th>
       <th>#</th>
     </tr>
-  </thead>
-  <tbody>
-      <tr *ngFor="let game of games; index as i">
-          <th scope="row">{{i + 1}}</th>
-          <td>{{game.name}}</td>
-          <td><a href="{{game.externalInfo}}">{{game.externalInfo}}</a></td>
-          <td>{{game.description}}</td>
-          <td><a class="text-primary" href="#">{{game.creatorUsername}}</a></td>
-          <td>{{game.verificationStatus.name}}</td>
-          <td><button class="btn btn-primary" (click)="onNewGameMatch(game)" >New match</button></td>
-      </tr>
-  </tbody>
+    </thead>
+    <tbody>
+    <tr *ngFor="let game of games; index as i">
+      <th scope="row">{{i + 1}}</th>
+      <td>{{game.name}}</td>
+      <td><a href="{{game.externalInfo}}">{{game.externalInfo}}</a></td>
+      <td>{{game.description}}</td>
+      <td><a class="text-primary" href="#">{{game.creatorUsername}}</a></td>
+      <td>{{game.verificationStatus.name}}
+        <fa-icon *ngIf="game.verificationStatus.name === 'VERIFIED' || game.verificationStatus.name === 'WILDCARD_VERIFIED'" class="text-success" [icon]="faVerified"></fa-icon>
+      </td>
+      <td><button class="btn btn-primary" (click)="onNewGameMatch(game)" >New match</button></td>
+    </tr>
+    </tbody>
 
-</table>
+  </table>
+
+
+  <div class="d-flex justify-content-between p-2">
+    <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="refreshGames()">
+    </ngb-pagination>
+
+    <select class="custom-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="refreshGames()">
+      <option [ngValue]="5">5 items per page</option>
+      <option [ngValue]="10">10 items per page</option>
+      <option [ngValue]="15">15 items per page</option>
+    </select>
+  </div>
+
+</div>
+
+

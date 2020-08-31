@@ -20,9 +20,6 @@ export class GameService {
   private host = environment.apiUrl;
   constructor(private http: HttpClient) { }
 
-  public getAllGames(): Observable<GameInfo[]>{
-    return  this.http.get<GameInfo[]>(`${this.host}/game/all`);
-  }
   getAllGamesByCreator(creator: User): Observable<GameInfo[]> {
     return  this.http.get<GameInfo[]>(`${this.host}/user/${creator.id}/games`);
   }
@@ -84,5 +81,13 @@ export class GameService {
 
   getTodaysGameScores(): Observable<GameScore[]> {
     return this.http.get<GameScore[]>(`${this.host}/game/scores-today`);
+  }
+
+  getAllCount(): Observable<number> {
+    return this.http.get<number>(`${this.host}/game/all/count`);
+  }
+
+  getAllGamesPage(page: number, pageSize: number): Observable<GameInfo[]> {
+    return  this.http.get<GameInfo[]>(`${this.host}/game/all?page=${page}&pageSize=${pageSize}`);
   }
 }

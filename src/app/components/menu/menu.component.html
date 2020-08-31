@@ -22,6 +22,9 @@
           <a class="dropdown-item" routerLink="user/my-games" >My games...</a>
         </div>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/learn-how" >Learn how</a>
+      </li>
     </ul>
 
 
@@ -30,10 +33,12 @@
         <button class="btn btn-outline-primary dropdown-toggle my-2 mx-3 my-lg-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           {{this.loggedUser.username}}
         </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" routerLink="/user/profile" >Profile</a>
+        <div class="dropdown-menu align-content-center" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item text-center text-primary" routerLink="/user/profile" >Profile</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item mt-3" (click)="onLogout()">Logout</a>
+          <div class="dropdown-item mt-3 text-success align-content-center">
+            <button class="btn btn-outline-primary" (click)="onLogout()">Logout</button>
+          </div>
         </div>
       </div>
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">

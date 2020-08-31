@@ -11,6 +11,7 @@ import {AuthenticationService} from '../../service/authentication.service';
 export class MenuComponent implements OnInit {
 
   public loggedUser: User;
+
   constructor(private authenticationService: AuthenticationService, private router: Router) { }
 
   ngOnInit(): void {

@@ -28,7 +28,7 @@ export class GameSessionComponent implements OnInit {
   onDetailsClick(gameSessionId: number): void {
     this.gameService.getGameSessionById(gameSessionId).subscribe(response => {
       console.log(response);
-      const dialogRef = this.gameSessionDetailsDialog.open(GameSessionDetailsComponent);
+      const dialogRef = this.gameSessionDetailsDialog.open(GameSessionDetailsComponent, {size: 'lg'});
       dialogRef.componentInstance.gameSession = response;
 
       dialogRef.result.then(

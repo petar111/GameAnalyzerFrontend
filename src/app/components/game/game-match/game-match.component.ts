@@ -20,6 +20,7 @@ import * as CanvasJS from '../../../../assets/js/canvasjs.min.js';
 import {AnalyticChart} from '../../../model/AnalyticChart';
 import {faCheck} from '@fortawesome/free-solid-svg-icons';
 import {Subscription} from 'rxjs';
+import {GameAdviceComponent} from '../../dialog/game-advice/game-advice.component';
 
 @Component({
   selector: 'app-game-match',
@@ -310,7 +311,8 @@ export class GameMatchComponent implements OnInit, OnDestroy {
   onAdvice(): void {
     this.gameService.getGameAdvice(this.gameSession.game).subscribe(
       data => {
-        alert(JSON.stringify(data));
+        const dialog = this.saveSessionDialog.open(GameAdviceComponent, {centered: true});
+        dialog.componentInstance.gameAdviceData = data;
       }
     );
   }

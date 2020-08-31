@@ -1,0 +1,9 @@
+<div class="container">
+  Nash equilibria:
+  <div class="row" *ngFor="let equilibrium of gameAdviceData.nashEquilibria">
+    Your strategy :
+    {{equilibrium.playedStrategy.name}}
+    Opponent strategy:
+    {{equilibrium.opposingStrategy.name}}
+  </div>
+</div>

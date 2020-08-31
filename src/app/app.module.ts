@@ -25,6 +25,7 @@ import { RegisterComponent } from './components/user/register/register.component
 import { UserGamesComponent } from './components/user/user-games/user-games.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LearnHowComponent } from './components/learn-how/learn-how.component';
+import { GameAdviceComponent } from './components/dialog/game-advice/game-advice.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { LearnHowComponent } from './components/learn-how/learn-how.component';
     SubmitScoreComponent,
     RegisterComponent,
     UserGamesComponent,
-    LearnHowComponent
+    LearnHowComponent,
+    GameAdviceComponent
   ],
   imports: [
     BrowserModule,

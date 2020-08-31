@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {GameService} from '../../../service/game.service';
-import {Router} from '@angular/router';
+import {NavigationEnd, NavigationStart, Router} from '@angular/router';
 import {Strategy} from '../../../model/Strategy';
 import {state, style, transition, trigger, useAnimation} from '@angular/animations';
 import {fadeInRight} from 'ng-animate';
@@ -15,6 +15,9 @@ import {SubmitScoreOption} from '../../../enum/submit-score-option.enum';
 import {GameScore} from '../../../model/score/GameScore';
 import {UserService} from '../../../service/user.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+
+import * as CanvasJS from '../../../../assets/js/canvasjs.min.js';
+import {AnalyticChart} from '../../../model/AnalyticChart';
 
 @Component({
   selector: 'app-game-match',
@@ -36,6 +39,13 @@ export class GameMatchComponent implements OnInit, OnDestroy {
   public playerColumnName = 'playerColumn';
   public playerColumn: PlayerMatch;
   public playerRow: PlayerMatch;
+  public chartPlayerRow: AnalyticChart;
+  public chartPlayerColumn: AnalyticChart;
+  public chartStrategiesPlayerRow: AnalyticChart;
+  public chartStrategiesPlayerColumn: AnalyticChart;
+  public strategiesPlayedPlayerRowDataPoints = [];
+
+
   constructor(private gameService: GameService,
               private router: Router,
               private notifierService: NotifierService,
@@ -50,6 +60,70 @@ export class GameMatchComponent implements OnInit, OnDestroy {
       alert('You have to select a game first.');
       this.router.navigateByUrl('game/all');
     }
+
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        console.log('aaa');
+      }
+    });
+    this.chartPlayerRow = this.initChart(this.playerRow, 'chartContainerPlayerRow');
+    this.chartPlayerColumn = this.initChart(this.playerColumn, 'chartContainerPlayerColumn');
+    this.chartStrategiesPlayerRow = this.initPieChart(this.playerRow, 'chartStrategiesPlayerRow');
+    this.chartStrategiesPlayerColumn = this.initPieChart(this.playerColumn, 'chartStrategiesPlayerColumn');
+
+  }
+  initPieChart(player: PlayerMatch, chartId: string): AnalyticChart{
+    const analyticChart = new AnalyticChart();
+    player.playedStrategies.forEach( strategy =>
+      analyticChart.dataPoints.push({y : strategy.timesPlayed, name : strategy.strategy.name})
+    );
+    analyticChart.chartId = chartId;
+    analyticChart.chart = new CanvasJS.Chart(chartId, {
+      theme: 'light2',
+      animationEnabled: true,
+      exportEnabled: true,
+      title: {
+        text: 'Strategies played'
+      },
+      data: [{
+        type: 'pie',
+        showInLegend: true,
+        toolTipContent: '<b>{name}</b>: ${y} (#percent%)',
+        indexLabel: '{name} - #percent%',
+        dataPoints: analyticChart.dataPoints
+      }]
+    });
+
+    analyticChart.chart.render();
+    return analyticChart;
+  }
+  initChart(player: PlayerMatch, chartId: string): AnalyticChart{
+    const analyticChart = new AnalyticChart();
+    analyticChart.dataPoints.push({
+      x: this.gameSession.numberOfRounds,
+      y: player.totalPayoff
+    });
+    analyticChart.chartId = chartId;
+    analyticChart.chart = new CanvasJS.Chart(chartId, {
+      exportEnabled: true,
+      title: {
+        text: 'Total payoff at round'
+      },
+      axisX: {
+        title: 'Total rounds',
+        interval: 1
+      },
+      axisY: {
+        title: 'Total payoff',
+        interval: 1
+      },
+      data: [{
+        type: 'spline',
+        dataPoints: analyticChart.dataPoints
+      }]
+    });
+    analyticChart.chart.render();
+    return analyticChart;
   }
 
   getPlayerColumnPayoffAmount(playedStrategy: Strategy, opposingStrategy: Strategy): number {
@@ -83,6 +157,50 @@ export class GameMatchComponent implements OnInit, OnDestroy {
     this.gameSession.numberOfRounds++;
     this.onNumberOfRoundsChanged();
     this.notifierService.notify('info', `You played ${this.playerRow.selectedStrategy.name} and your opponent played ${this.playerColumn.selectedStrategy.name}`);
+
+
+    this.updateTotalPayoffCharts();
+    this.updateStrategiesCharts();
+
+  }
+
+  private updateTotalPayoffCharts(): void{
+    this.chartPlayerRow.dataPoints.push(
+      {
+        y: this.playerRow.totalPayoff,
+        x: this.gameSession.numberOfRounds
+      }
+    );
+    this.chartPlayerRow.chart.render();
+
+    this.chartPlayerColumn.dataPoints.push(
+      {
+        y: this.playerColumn.totalPayoff,
+        x: this.gameSession.numberOfRounds
+      }
+    );
+    this.chartPlayerColumn.chart.render();
+  }
+
+  private updateStrategiesCharts(): void{
+    this.chartStrategiesPlayerColumn.dataPoints.length = 0;
+    this.playerColumn.playedStrategies.forEach(
+      strategy => {
+        this.chartStrategiesPlayerColumn.dataPoints.push(
+          {y : strategy.timesPlayed, name : strategy.strategy.name});
+      }
+    );
+    this.chartStrategiesPlayerColumn.chart.render();
+
+    this.chartStrategiesPlayerRow.dataPoints.length = 0;
+    this.playerRow.playedStrategies.forEach(
+      strategy => {
+        this.chartStrategiesPlayerRow.dataPoints.push(
+          {y : strategy.timesPlayed, name : strategy.strategy.name}
+        );
+      }
+    );
+    this.chartStrategiesPlayerRow.chart.render();
   }
   onNumberOfRoundsChanged(): void{
     switch (this.gameSession.numberOfRounds){
@@ -183,4 +301,7 @@ export class GameMatchComponent implements OnInit, OnDestroy {
       }
     );
   }
+
+
+
 }

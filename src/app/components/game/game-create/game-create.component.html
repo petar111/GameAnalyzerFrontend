@@ -32,12 +32,12 @@
       <label class="form-check-label" for="gameZeroSum">Zero sum</label>
     </div>
     -->
-    <table class="table">
+    <table class="table bg-white">
       <tbody>
       <tr>
         <th>#</th>
         <td class="text-center" *ngFor="let strategy of this.playerColumn.playableStrategies;index as i">
-          <input type="text" ngModel name="S2_{{i + 1}}" size="10" style="text-align: center" class="form-control-plaintext" value="{{strategy.name}}" placeholder="...">
+          <input type="text"  ngModel name="S2_{{i + 1}}" size="10" style="text-align: center" class="form-control-plaintext" value="{{strategy.name}}" placeholder="...">
         </td>
       </tr>
       <tr *ngFor="let strategy of this.playerRow.playableStrategies; index as i">

@@ -1,32 +1,46 @@
-<div *ngIf="this.gameSession !== undefined && this.gameSession.game !== undefined">
 
-  <div class="row">
+  <div class="row bg-med">
+    <div class="col-3 bg-white">
 
-    <div class="col-4">
       <div class="row">
         <div class="col">
           Total rounds: {{this.gameSession.numberOfRounds}}
         </div>
       </div>
+
       <div class="row">
         <div class="col">
           {{this.playerRow.player.name}}
         </div>
+
         <div class="col">
           {{this.playerColumn.player.name}}
         </div>
+
       </div>
+
       <div class="row">
         <div class="col">
-          Total payoff: {{this.playerRow.totalPayoff}}
+          <a  data-toggle="collapse" href="#playerRowTotalPayoff" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Total payoff:
+          </a>
+           {{this.playerRow.totalPayoff}}
         </div>
         <div class="col">
-          Total payoff: {{this.playerColumn.totalPayoff}}
+          <a data-toggle="collapse" href="#playerColumnTotalPayoff" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Total payoff:
+          </a>
+             {{this.playerColumn.totalPayoff}}
         </div>
       </div>
+
       <div class="row">
         <div class="col">
-          Strategies played:
+
+          <a data-toggle="collapse" href="#playerRowStrategiesPlayedChart" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Strategies played:
+          </a>
+
           <div *ngFor="let strategy of this.playerRow.player.playableStrategies" class="row">
             <div class="col">
               {{strategy.name}}: {{findPlayedStrategyByStrategyAndPlayerMatch(strategy, this.playerRow).timesPlayed}}
@@ -34,7 +48,9 @@
           </div>
         </div>
         <div class="col">
-          Strategies played:
+          <a data-toggle="collapse" href="#playerColumnStrategiesPlayedChart" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Strategies played:
+          </a>
           <div *ngFor="let strategy of this.playerColumn.player.playableStrategies" class="row">
             <div class="col">
               {{strategy.name}}: {{findPlayedStrategyByStrategyAndPlayerMatch(strategy, this.playerColumn).timesPlayed}}
@@ -43,10 +59,10 @@
         </div>
 
       </div>
-      <h1 class="border border-primary text-primary">Analytics : TODO</h1>
+
     </div>
 
-    <div class="border border-dark col-8">
+    <div class="border border-dark col-8 bg-white">
       <div class="container">
         <div class="row">
           <p>{{this.gameSession.game.name}}</p>
@@ -60,70 +76,91 @@
       </div>
 
       <div class="container">
+        <p class="text-center">{{this.playerColumn.player.name}}</p>
         <div class="row">
+          <div class="col-1 align-self-center"><span>{{this.playerRow.player.name}}</span></div>
+          <div class="col-11">
+            <table class="table">
+              <tbody>
+              <tr>
+                <th>#</th>
+                <td class="text-center" *ngFor="let strategyColumnRead of this.playerColumn.player.playableStrategies;index as i">
+                  <button  type="button" class="btn btn-primary">{{strategyColumnRead.name}}</button>
+                </td>
+              </tr>
+              <tr *ngFor="let strategyRow of this.playerRow.player.playableStrategies; index as i">
+                <th>
+                  <button type="button" class="btn btn-primary" (click)="onStrategyButtonClick(strategyRow)">{{strategyRow.name}}</button>
+                </th>
 
-
-        <table class="table">
-          <tbody>
-          <tr>
-            <th>#</th>
-            <td class="text-center" *ngFor="let strategyColumnRead of this.playerColumn.player.playableStrategies;index as i">
-              <button  type="button" class="btn btn-primary">{{strategyColumnRead.name}}</button>
-            </td>
-          </tr>
-          <tr *ngFor="let strategyRow of this.playerRow.player.playableStrategies; index as i">
-            <th>
-              <button type="button" class="btn btn-primary" (click)="onStrategyButtonClick(strategyRow)">{{strategyRow.name}}</button>
-            </th>
-
-            <td *ngFor="let strategyColumn of this.playerColumn.player.playableStrategies; index as j">
-              <div class="container">
-                <div class="row">
-                  (
-                  <div class="col-5">
-                    {{this.getPlayerRowPayoffAmount(strategyRow, strategyColumn)}}
+                <td *ngFor="let strategyColumn of this.playerColumn.player.playableStrategies; index as j">
+                  <div class="container">
+                    <div class="row">
+                      (
+                      <div class="col-5">
+                        {{this.getPlayerRowPayoffAmount(strategyRow, strategyColumn)}}
+                      </div>
+                      ,
+                      <div class="col-5">
+                        {{this.getPlayerColumnPayoffAmount(strategyColumn, strategyRow)}}
+                      </div>
+                      )
+                    </div>
                   </div>
-                  ,
-                  <div class="col-5">
-                    {{this.getPlayerColumnPayoffAmount(strategyColumn, strategyRow)}}
-                  </div>
-                  )
-                </div>
-              </div>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-
-       </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
 
         <div class="row">
           <p class="text-primary">Selected strategy: <span [@fadeInRight] = "fadeInRight ? 'one' : 'two'"  >{{this.playerRow.selectedStrategy.name}}</span></p>
         </div>
 
-        <div class="row">
-          <div class="col-1">
+
+        <div class="row d-flex align-content-start flex-wrap">
             <button type="button" (click)="this.onMove()" class="btn btn-primary">Move</button>
-          </div>
-          <div class="col-1">
-            <button type="button" class="btn btn-warning" (click)="this.onAdvice()">Advice</button>
-          </div>
-
+            <button type="button" class="btn btn-warning" (click)="this.onAdvice()" style="margin: 0px 5px">Advice</button>
+            <button class="btn btn-outline-primary" (click)="onSaveSession()">Save session</button>
         </div>
 
 
-      </div>
-
-      <div class="container">
-        <div class="row">
-          <button (click)="onSaveSession()">Save session</button>
-        </div>
       </div>
 
     </div>
 
+  </div>
+
+  <div class="container bg-med" id="analyticsGroup">
+    Visual
+      <div class="collapse col-6" id="playerColumnTotalPayoff" data-parent="#analyticsGroup">
+        <div id="chartContainerPlayerColumn" class="bg-secondary"></div>
+      </div>
+      <div class="collapse col-6" id="playerColumnStrategiesPlayedChart" data-parent="#analyticsGroup">
+        <div id="chartStrategiesPlayerColumn" class="bg-secondary"></div>
+      </div>
+
+      <div class="collapse col-6" id="playerRowStrategiesPlayedChart" data-parent="#analyticsGroup">
+        <div id="chartStrategiesPlayerRow" class="bg-secondary"></div>
+      </div>
+      <div class="collapse col-6" id="playerRowTotalPayoff" data-parent="#analyticsGroup">
+        <div id="chartContainerPlayerRow" class="bg-secondary"></div>
+      </div>
 
   </div>
-</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

@@ -22,6 +22,7 @@ export class GameSessionDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.gameSession);
     this.playerRow = this.gameSession.players.find(playerMatch => playerMatch.playerLabel === 'playerRow');
     this.playerColumn = this.gameSession.players.find(playerMatch => playerMatch.playerLabel === 'playerColumn');
   }

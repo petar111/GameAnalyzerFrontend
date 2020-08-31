@@ -1,7 +1,11 @@
-
+<div class="bg-med">
   <app-menu *ngIf="!isLoginComponent"></app-menu>
 
   <router-outlet (activate)="onRouterOutletActivate($event)"></router-outlet>
+</div>
+
+
+
 
 
   <notifier-container></notifier-container>

@@ -75,10 +75,14 @@ export class GameService {
 
     gameSession.game = game;
     gameSession.players
-      .push(new PlayerMatch(gameSession.game.players.find(p => p.name === 'Player1'), 'PlayerRow'));
+      .push(new PlayerMatch(gameSession.game.players.find(p => p.name === 'Player1'), 'playerRow'));
     gameSession.players
-      .push(new PlayerMatch(gameSession.game.players.find(p => p.name === 'Player2'), 'PlayerColumn'));
+      .push(new PlayerMatch(gameSession.game.players.find(p => p.name === 'Player2'), 'playerColumn'));
 
     localStorage.setItem('gameSession', JSON.stringify(gameSession));
+  }
+
+  getTodaysGameScores(): Observable<GameScore[]> {
+    return this.http.get<GameScore[]>(`${this.host}/game/scores-today`);
   }
 }

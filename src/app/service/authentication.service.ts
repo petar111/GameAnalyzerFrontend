@@ -26,6 +26,7 @@ export class AuthenticationService {
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    localStorage.removeItem('gameSession');
   }
 
   saveAuthenticationData(data: HttpResponse<User>): void {

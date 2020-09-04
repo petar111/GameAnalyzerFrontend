@@ -1,1 +1,3 @@
-
+.vertical-text {
+  transform: rotate(270deg);
+}

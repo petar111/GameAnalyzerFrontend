@@ -21,6 +21,7 @@ import {AnalyticChart} from '../../../model/AnalyticChart';
 import {faCheck} from '@fortawesome/free-solid-svg-icons';
 import {Subscription} from 'rxjs';
 import {GameAdviceComponent} from '../../dialog/game-advice/game-advice.component';
+import {User} from '../../../model/User';
 
 @Component({
   selector: 'app-game-match',
@@ -52,6 +53,8 @@ export class GameMatchComponent implements OnInit, OnDestroy {
   public strategiesPlayedPlayerRowDataPoints = [];
   public subscriptions: Subscription[] = [];
 
+  public loggedUser: User;
+
   constructor(private gameService: GameService,
               private router: Router,
               private notifierService: NotifierService,
@@ -67,14 +70,21 @@ export class GameMatchComponent implements OnInit, OnDestroy {
     if (localStorage.getItem('gameSession') !== undefined  && localStorage.getItem('gameSession') !== null) {
       this.gameSession = JSON.parse(localStorage.getItem('gameSession'));
       this.initPlayers();
+
+      this.loggedUser = this.userService.getUserFromLocalStorage();
+
+      this.chartPlayerRow = this.initChart(this.playerRow, 'chartContainerPlayerRow');
+      this.chartPlayerColumn = this.initChart(this.playerColumn, 'chartContainerPlayerColumn');
+      this.chartStrategiesPlayerRow = this.initPieChart(this.playerRow, 'chartStrategiesPlayerRow');
+      this.chartStrategiesPlayerColumn = this.initPieChart(this.playerColumn, 'chartStrategiesPlayerColumn');
+
     }else{
       alert('You have to select a game first.');
       this.router.navigateByUrl('game/all');
     }
-    this.chartPlayerRow = this.initChart(this.playerRow, 'chartContainerPlayerRow');
-    this.chartPlayerColumn = this.initChart(this.playerColumn, 'chartContainerPlayerColumn');
-    this.chartStrategiesPlayerRow = this.initPieChart(this.playerRow, 'chartStrategiesPlayerRow');
-    this.chartStrategiesPlayerColumn = this.initPieChart(this.playerColumn, 'chartStrategiesPlayerColumn');
+
+
+
 
   }
   initPieChart(player: PlayerMatch, chartId: string): AnalyticChart{

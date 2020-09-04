@@ -270,6 +270,9 @@ export class GameMatchComponent implements OnInit, OnDestroy {
   }
 
   onSaveSession(): void {
+    if (this.gameSession.numberOfRounds === 0){
+      return;
+    }
     const dialog = this.saveSessionDialog.open(SaveSessionDialogComponent, {centered: true});
     dialog.componentInstance.gameSessionData = this.gameSession;
     dialog.result.then(data => {

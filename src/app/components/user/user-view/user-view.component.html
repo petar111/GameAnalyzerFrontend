@@ -1,0 +1,8 @@
+<div *ngIf="this.user != undefined">
+  <div class="d-flex flex-row">
+    <div class="mr-2">{{user.username}}</div>
+    <div class="mr-2">{{user.rank.name}}</div>
+    <button *ngIf="this.isFollowing !== undefined && !this.isFollowing" class="btn btn-link mr-2" (click)="onFollow()"><fa-icon [icon]="faFollow"></fa-icon></button>
+    <button *ngIf="this.isFollowing !== undefined && this.isFollowing" class="btn btn-link mr-2" (click)="onUnFollow()"><fa-icon [icon]="faUnFollow"></fa-icon></button>
+  </div>
+</div>

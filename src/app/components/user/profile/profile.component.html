@@ -45,28 +45,37 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col">
-              <span class="pull-left"><a (click)="onFollowingClick()" ><strong>Following</strong></a></span>
+              <span class="pull-left"><button class="btn btn-link" (click)="onFollowingClick()" ><strong>Following</strong></button></span>
             </div>
             <div *ngIf="this.followingCount !== undefined" class="col text-right">
               {{this.followingCount}}
             </div>
           </div>
-          <div class="row" *ngIf="this.followingEnabled">
-            <a class="follow_profile_link" *ngFor="let username of this.followingUsernames">  {{username}}  </a>
+          <div class="row" *ngIf="this.followingEnabled" >
+            <div *ngFor="let username of this.followingUsernames">
+              <div class="card card-body">
+                <app-user-view (unFollowUser)="onUnfollowUser($event)" (followUser)="onFollowUser($event)" [username]="username" ></app-user-view>
+              </div>
+            </div>
           </div>
         </li>
         <li class="list-group-item">
           <div class="row">
             <div class="col">
-              <span class="pull-left"><a (click)="onFollowersClick()" ><strong>Followers</strong></a></span>
+              <span class="pull-left"><button class="btn btn-link" (click)="onFollowersClick()" ><strong>Followers</strong></button></span>
             </div>
             <div *ngIf="this.followersCount !== undefined" class="col text-right">
               {{this.followersCount}}
             </div>
           </div>
-          <div class="row" *ngIf="this.followersEnabled">
-                <a class="follow_profile_link" *ngFor="let username of this.followersUsernames" >  {{username}}  </a>
+          <div class="row" *ngIf="this.followersEnabled" >
+            <div *ngFor="let username of this.followersUsernames">
+              <div class="card card-body">
+                <app-user-view (unFollowUser)="onUnfollowUser($event)" (followUser)="onFollowUser($event)" [username]="username" ></app-user-view>
+              </div>
+              </div>
           </div>
+
         </li>
       </ul>
 

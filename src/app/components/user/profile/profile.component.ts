@@ -4,6 +4,8 @@ import {User} from '../../../model/User';
 import {NotifierService} from 'angular-notifier';
 import {Router} from '@angular/router';
 import {ExternalService} from '../../../service/external.service';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {UserViewComponent} from '../user-view/user-view.component';
 
 @Component({
   selector: 'app-profile',
@@ -24,7 +26,8 @@ export class ProfileComponent implements OnInit {
   constructor(private userService: UserService,
               private notifierService: NotifierService,
               private router: Router,
-              private externalService: ExternalService) {
+              private externalService: ExternalService,
+              private dialogService: NgbModal) {
   }
 
   ngOnInit(): void {
@@ -110,5 +113,20 @@ export class ProfileComponent implements OnInit {
 
   calculateToPromotion(): number {
     return this.user.rank.experienceMax + 1 - this.user.experience;
+  }
+
+  onFollowerUsernameClick(username: string): void {
+    const dialogRef = this.dialogService.open(UserViewComponent);
+    dialogRef.componentInstance.username = username;
+  }
+
+  onFollowUser($event: string): void {
+    this.followingUsernames.push($event);
+    this.followingCount++;
+  }
+
+  onUnfollowUser($event: string): void {
+    this.followingUsernames = this.followingUsernames.filter(u => u !== $event);
+    this.followingCount--;
   }
 }

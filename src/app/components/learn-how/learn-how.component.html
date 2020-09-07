@@ -1,28 +1,52 @@
-<div class="container">
-  <div class="row">
-    <div class="col">
-      Create a game
-      <img src="../../../assets/learn-how/Gun_Nut_FO4.png" alt="">
+<div class="container bg-white">
+  <div class="row mb-5 ml-3">
+    <div (mouseenter)="animationRow1=false" (mouseleave)="animationRow1=true" [@change-bg] = "animationRow1 ? 'one' : 'two'"  class="col d-flex flex-column shadow-lg">
+      <p>To create a game, select game->create on menu.</p>
+      <img class="learn-img" src="../../../assets/learn-how/choose-my-games.png" alt="">
+      <p>After that, the screen will show next.</p>
+      <img class="learn-img"  src="../../../assets/learn-how/create-game.png" alt="">
+      <p>Just fill in the data and the game will be created.</p>
+    </div>
+    <div class="col align-self-center">
+      <img  src="../../../assets/learn-how/Gun_Nut_FO4.png" alt="">
     </div>
   </div>
 
-  <div class="row">
-    <div class="col">
-
+  <div  class="row mb-5 ">
+    <div class="col align-self-center">
+      <img  src="../../../assets/learn-how/Fo4_Big_Leagues.png" alt="">
     </div>
 
-    <div class="col">
-      Start game match
-      <img src="../../../assets/learn-how/Fo4_Big_Leagues.png" alt="">
+    <div (mouseenter)="animationRow2=false" (mouseleave)="animationRow2=true" [@change-bg] = "animationRow2 ? 'one' : 'two'" class="col d-flex flex-column shadow-lg">
+      <p>To start a game match, go to game->all games.</p>
+      <img class="learn-img" src="../../../assets/learn-how/choose-my-games.png" alt="">
+      <p>After that, the games will be shown. To start a game, just the button on the right that says "New match"</p>
+      <img class="learn-img" src="../../../assets/learn-how/all-games.png" alt="">
+      <p>Then you can play the game.</p>
     </div>
   </div>
 
 
-  <div class="row">
-    <div class="col">
-      Submit game score
+  <div class="row  ml-3">
+    <div (mouseenter)="animationRow3=false" (mouseleave)="animationRow3=true" [@change-bg] = "animationRow3 ? 'one' : 'two'" class="col d-flex flex-column shadow-lg">
+      <p>While you are playing, on the landmark, the dialog will be shown.</p>
+      <img class="learn-img" src="../../../assets/learn-how/save-session.png" alt="">
+      <p>To save game session, just click "Save". (NOTE! If you loaded game session or if you are already saved it, the
+        program will ask you weather to save as new or owerwrite existing)
+        When you save game, it may improve your experience and rank so you can enjoy more benefits that our program has.</p>
+    </div>
+    <div class="col align-self-center">
       <img src="../../../assets/learn-how/Fo4_Scrounger.png" alt="">
     </div>
+  </div>
+
+  <div class="row mt-5" id="game">
+    <div class="col">
+    </div>
+    <div class="col">
+      <img  style="max-width: 600px" src="../../../assets/learn-how/game-match-visual.png" alt="">
+    </div>
+    <div class="col"></div>
   </div>
 
 </div>

@@ -1,9 +1,7 @@
 <div class="container">
-  Nash equilibria:
-  <div class="row" *ngFor="let equilibrium of gameAdviceData.nashEquilibria">
-    Your strategy :
-    {{equilibrium.playedStrategy.name}}
-    Opponent strategy:
-    {{equilibrium.opposingStrategy.name}}
+  <img src="../../../../assets/game-advice/Fo4_Hacker.png" alt="Statistics">
+  <p class="text-primary">Nash equilibria:</p>
+  <div class="card" *ngFor="let equilibrium of gameAdviceData.nashEquilibria">
+    Your strategy : {{equilibrium.playedStrategy.name}} Opponent strategy: {{equilibrium.opposingStrategy.name}}
   </div>
 </div>
